@@ -708,6 +708,7 @@ typedef struct collection_chateau
 
 t_collection_chateau* collection_chateau_creer();
 
+void collection_chateau_reallouer(t_collection_chateau* collection_chateau);
 
 void collection_chateau_distribuer_proche(t_collection_chateau* collection_chateau,t_collection_habitation* collection_habitation,int** longueurs);
 

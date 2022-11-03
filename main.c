@@ -1,11 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "mabiblio.h"
 
-#include "compalleg.h"
-#include "graphismes.h"
-#include "define.h"
-#include "menu.h"
-#include "time.h"
+///Source: https://github.com/iNaDeX/ECE-City   2018
 
 t_graphismes* graphs;
 
