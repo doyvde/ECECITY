@@ -449,6 +449,7 @@ void case_remplir(t_case*, int, void*);
 //#define NB_BOUTONS 5
 #define COUL_BORD makecol(140,140,140)
 #define COUL_FOND makecol(180,180,180)
+#define COUL_FOND1 makecol(0,0,255)
 
 typedef struct boiteaoutils
 {

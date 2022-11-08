@@ -622,7 +622,10 @@ int chateau_distribuer(t_chateau* chateau,t_habitation* habitation)
         do
         {
             eau_distrib= habitation->chateaux_fournisseurs[i].qte_eau_distribuee;
-            if(eau_distrib == 0) index = i;
+            if(eau_distrib == 0)
+            {
+                index = i;
+            }
             i++;
         }while(eau_distrib != 0 && i<FOURNISSEUR_MAX);
         ///////////////////////////////////////////////////////////////
@@ -1353,6 +1356,7 @@ void editeur_afficher(t_editeur* ed)
     // on vide le buffer page
     clear_bitmap(page);
 
+    rectfill(page, 0, 0, TAILLE_FENETRE_W, TAILLE_FENETRE_H, COUL_FOND1);
     // on construit notre affichage sur le buffer page
     ville_afficher(ed->maville,ed->boite_a_outils->bouton_choisi);
     boiteaoutils_afficher(ed->boite_a_outils);
@@ -1634,7 +1638,7 @@ BITMAP* selectionaleatoirecouleurbarrechargement()
     return nouv;
 }
 
-void avancerchargement(BITMAP* barrechargement,int barres_a_afficher,int* barres_deja_affichees)
+/*void avancerchargement(BITMAP* barrechargement,int barres_a_afficher,int* barres_deja_affichees)
 {
     int i;
     for(i=0; i<barres_a_afficher; i++)
@@ -1644,7 +1648,7 @@ void avancerchargement(BITMAP* barrechargement,int barres_a_afficher,int* barres
         blit(page,screen,0,0,0,0,SCREEN_W,SCREEN_H);
     }
     (*barres_deja_affichees) = (*barres_deja_affichees) + barres_a_afficher;
-}
+}*/
 
 t_graphismes* graphismes_charger()
 {
@@ -1654,21 +1658,21 @@ t_graphismes* graphismes_charger()
     t_graphismes* nouv = NULL;
     nouv = (t_graphismes*)malloc(1*sizeof(t_graphismes));
 
-    BITMAP* fondchargement=chargerImage("fichiers/images/fondchargement.bmp");
+    /*BITMAP* fondchargement=chargerImage("fichiers/images/fondchargement.bmp");
     BITMAP* barrechargement= selectionaleatoirecouleurbarrechargement();
 
-    blit(fondchargement,page,0,0,0,0,SCREEN_W,SCREEN_H);
+    blit(fondchargement,page,0,0,0,0,SCREEN_W,SCREEN_H);*/
 
     ///////////////////////////////////////////
 
     nouv->buffer_ville = create_bitmap(GAME_W,GAME_H);
-    avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
+    //avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
     clear_bitmap(nouv->buffer_ville);
 
     nouv->fond_herbe = chargerImage("fichiers/images/jeu/fond_herbe.bmp");
-    avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
+    //avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
     nouv->grille = chargerImage("fichiers/images/jeu/grille.bmp");
-    avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
+    //avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
 
     for(j=0; j<NB_NIVEAUX; j++)
     {
@@ -1676,53 +1680,53 @@ t_graphismes* graphismes_charger()
         {
             sprintf(nom_fichier,"fichiers/images/jeu/route%d-%d.bmp",j,i);
             nouv->route[j][i] = chargerImage(nom_fichier);
-            avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
+            //avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
         }
     }
 
     nouv->terrain_vague = chargerImage("fichiers/images/jeu/terrain_vague.bmp");
-    avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
+    //avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
     nouv->ruine = chargerImage("fichiers/images/jeu/ruine.bmp");
-    avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
+    //avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
     nouv->pompier = chargerImage("fichiers/images/jeu/pompier.bmp");
 
     for(i=0; i<NB_IMG_CABANES; i++)
     {
         sprintf(nom_fichier,"fichiers/images/jeu/cabane%d.bmp",i);
         nouv->cabane[i] = chargerImage(nom_fichier);
-        avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
+        //avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
     }
 
     for(i=0; i<NB_IMG_MAISONS; i++)
     {
         sprintf(nom_fichier,"fichiers/images/jeu/maison%d.bmp",i);
         nouv->maison[i] = chargerImage(nom_fichier);
-        avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
+        //avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
     }
 
     for(i=0; i<NB_IMG_IMMEUBLES; i++)
     {
         sprintf(nom_fichier,"fichiers/images/jeu/immeuble%d.bmp",i);
         nouv->immeuble[i] = chargerImage(nom_fichier);
-        avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
+        //avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
     }
 
     for(i=0; i<NB_IMG_GRATTECIELS; i++)
     {
         sprintf(nom_fichier,"fichiers/images/jeu/gratte_ciel%d.bmp",i);
         nouv->gratte_ciel[i] = chargerImage(nom_fichier);
-        avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
+        //avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
     }
 
     nouv->chateau = chargerImage("fichiers/images/jeu/chateau.bmp");
-    avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
+    //avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
     nouv->centrale = chargerImage("fichiers/images/jeu/centrale.bmp");
-    avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
+    //avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
     nouv->caserne = chargerImage("fichiers/images/jeu/caserne.bmp");
-    avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
+    //avancerchargement(barrechargement,VITESSE_AFFICHAGE,&barres_deja_affichees);
 
-    destroy_bitmap(fondchargement);
-    destroy_bitmap(barrechargement);
+    //destroy_bitmap(fondchargement);
+    //destroy_bitmap(barrechargement);
 
     return nouv;
 }
@@ -2766,10 +2770,10 @@ void sous_menu_liberer(t_graphsousMenu* g)
         destroy_bitmap(g->img_boutons_off[i]);
         destroy_bitmap(g->img_boutons_on[i]);
     }
-    for(i=0;i<NB_IMG_OISEAU;i++)
+    /*for(i=0;i<NB_IMG_OISEAU;i++)
     {
         destroy_bitmap(g->oiseau[i]);
-    }
+    }*/
 }
 
 void sous_menu_charger(t_graphsousMenu* g)
@@ -2793,11 +2797,11 @@ void sous_menu_charger(t_graphsousMenu* g)
     g->img_boutons_off[SOUS_MENU_CAPITALISTE] = chargerImage("fichiers/images/menu/sousmenu/capitaliste0.bmp");
     g->img_boutons_on[SOUS_MENU_CAPITALISTE]  = chargerImage("fichiers/images/menu/sousmenu/capitaliste1.bmp");
 
-    for(i=0;i<NB_IMG_OISEAU;i++)
+    /*for(i=0;i<NB_IMG_OISEAU;i++)
     {
         sprintf(tmp,"fichiers/images/menu/sousmenu/oiseau%d.bmp",i);
         g->oiseau[i] = chargerImage(tmp);
-    }
+    }*/
 
     for(i=0; i<NB_BOUTONS_SOUS_MENU; i++)
     {
@@ -3006,12 +3010,12 @@ int menu_selection_mode(t_graphMenu graph)
         else
             draw_sprite(page, graph.img_boutons_off[MENU_BOUTON_RETOUR], graph.boutons_x[MENU_BOUTON_RETOUR],graph.boutons_y[MENU_BOUTON_RETOUR]);
 
-        draw_sprite(page,graph.graphsdusousmenu.oiseau[index],posx,120);
+        /*draw_sprite(page,graph.graphsdusousmenu.oiseau[index],posx,120);
         posx+=5;
         if(cpt% 4== 0)
             index++;
         if(index>=NB_IMG_OISEAU)
-            index=0;
+            index=0;*/
 
         draw_sprite(page, graph.cursor, mx, my);
         afficher_page();
