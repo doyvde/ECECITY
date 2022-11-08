@@ -16,6 +16,7 @@
 #include <string.h>
 #include <direct.h>
 #include <time.h>
+#include <stdbool.h>
 
 /////////////////define.h////////////////////////
 /********************************/
@@ -42,8 +43,8 @@ typedef struct fournisseur
 
 #define TAILLE_POLICE 10
 
-#define GAME_POSX 112
-#define GAME_POSY 56
+#define GAME_POSX 5
+#define GAME_POSY 25
 
 #define NB_CASES_LIG 35
 #define NB_CASES_COL 45
@@ -437,41 +438,6 @@ void case_free(t_case*);
 
 void case_remplir(t_case*, int, void*);
 
-/////////////////boitaoutil.h////////////////////////
-//géométrie de la boite
-
-#define COORDX 10
-#define COORDY 56
-#define LARGEUR_CASE 50
-#define TAILLE_BORDS 2
-#define NB_BOUTONS_H 10
-#define NB_BOUTONS_W 1
-//#define NB_BOUTONS 5
-#define COUL_BORD makecol(140,140,140)
-#define COUL_FOND makecol(180,180,180)
-#define COUL_FOND1 makecol(0,0,255)
-
-typedef struct boiteaoutils
-{
-    int x; //coordonnées d'affichage de la boite à outils
-    int y; //coordonnées d'affichage de la boite à outils
-    int bouton_choisi;
-    int matbouton[NB_BOUTONS_H][NB_BOUTONS_W];
-    BITMAP *img_bouton_off[NB_BOUTONS_H][NB_BOUTONS_W];
-    BITMAP *img_bouton_on[NB_BOUTONS_H][NB_BOUTONS_W];
-}t_boite_a_outils;
-
-t_boite_a_outils* boiteaoutils_creer();
-
-void boiteaoutils_reinitialiser_boutons_uniques(t_boite_a_outils* boiteaoutils);
-
-void boiteaoutils_chargerimages(t_boite_a_outils* boiteaoutils);
-
-void boiteaoutils_afficher(t_boite_a_outils* boiteaoutils);
-
-void boiteaoutils_gerer(t_boite_a_outils* boiteaoutils);
-
-void boiteaoutils_liberer(t_boite_a_outils* boiteaoutils);
 
 /////////////////caserne.h////////////////////////
 typedef struct caserne
@@ -862,21 +828,81 @@ void ville_liberer(t_ville* v);
 
 void ville_gerer_actions_utilisateur(t_ville* v, int bouton_boite_a_outils);
 
+/////////////////boitaoutil.h////////////////////////
+//géométrie de la boite
+
+#define COORDX 910
+#define COORDY 56
+#define LARGEUR_CASE 50
+#define TAILLE_BORDS 2
+#define NB_BOUTONS_H 10
+#define NB_BOUTONS_W 1
+//#define NB_BOUTONS 5
+#define COUL_BORD makecol(140,140,140)
+#define COUL_FOND makecol(180,180,180)
+#define COUL_FOND1 makecol(0,128,128)
+
+typedef struct boiteaoutils
+{
+    int x; //coordonnées d'affichage de la boite à outils
+    int y; //coordonnées d'affichage de la boite à outils
+    int isCatch;
+    int bouton_choisi;
+    int matbouton[NB_BOUTONS_H][NB_BOUTONS_W];
+    BITMAP *img_bouton_off[NB_BOUTONS_H][NB_BOUTONS_W];
+    BITMAP *img_bouton_on[NB_BOUTONS_H][NB_BOUTONS_W];
+}t_boite_a_outils;
+
+/////////////////info.h////////////////////////
+
+#define COORDX1 100
+#define COORDY1 720
+typedef struct information
+{
+    int x; //coordonnées d'affichage de la boite à info
+    int y; //coordonnées d'affichage de la boite à info
+    int isCatch;
+
+}t_infos;
+
+t_infos * infos_creer();
+
+
 /////////////////editeur.h////////////////////////
 typedef struct editeur
 {
     t_ville* maville;
     t_boite_a_outils* boite_a_outils;
+    t_infos* info
 } t_editeur;
 
 t_editeur* editeur_allouer(int mode_de_jeu);
 
 void editeur_gerer(t_editeur* ed);
 
-void editeur_afficher(t_editeur* ed);
+int editeur_afficher(t_editeur* ed);
 
 void editeur_liberer(t_editeur* ed);
 
+void info_afficher(t_editeur* ed);
+
+void info_drag(t_editeur* ed);
+
+/////////////////boitaoutil.h////////////////////////
+
+t_boite_a_outils* boiteaoutils_creer();
+
+void boiteaoutils_drag(t_boite_a_outils* boiteaoutils);
+
+void boiteaoutils_reinitialiser_boutons_uniques(t_boite_a_outils* boiteaoutils);
+
+void boiteaoutils_chargerimages(t_boite_a_outils* boiteaoutils);
+
+void boiteaoutils_afficher(t_boite_a_outils* boiteaoutils);
+
+void boiteaoutils_gerer(t_boite_a_outils* boiteaoutils);
+
+void boiteaoutils_liberer(t_boite_a_outils* boiteaoutils);
 
 
 /////////////////graphisme.h////////////////////////
@@ -967,7 +993,7 @@ void menu_afficher(t_graphMenu graph);
 // affichage du sous-menu a propos
 void menu_afficher_credits(t_graphMenu graph);
 
-void menu_boucle_jeu(int mode_choisi,const char* nom_fichier);
+void menu_boucle_jeu(int mode_choisi,const char* nom_fichier,t_graphMenu graph);
 
 int menu_selection_mode(t_graphMenu graph);
 

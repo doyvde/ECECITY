@@ -2,6 +2,7 @@
 // Created by denis on 02/11/2022.
 //
 
+
 #include "mabiblio.h"
 
 /////////////////bfs.c////////////////////////
@@ -150,6 +151,69 @@ void tester_voisins(t_case*** kase,int ligne,int colonne,int* longueurs,int marq
         }
     }
 }
+/////////////////info.c////////////////////////
+t_infos * infos_creer()
+{
+
+    t_infos* nouv;
+    //allocation mémoire pour cette instance
+    nouv=(t_infos*)malloc(1*sizeof(t_infos));
+    //On en profite pour remplir directement les champs de l'instance
+    //Car ils sont définis en DUR par le developeur
+    nouv->x=COORDX1;
+    nouv->y=COORDY1;
+
+    nouv->isCatch=0;
+    return nouv;
+}
+void info_afficher(t_editeur* ed)
+{
+    int x,y;
+    x = ed->info->x;
+    y = ed->info->y;
+    rectfill(page, x, y, x+695, y+45, COUL_FOND);
+    rect(page, x, y-20, x+695, y+45, COUL_BORD);
+    /***** il faudra aussi rajouter les variables du style: argent, nombre d'habitants etc..*****/
+    textprintf_ex(page,font,x+12,y+10,makecol(255,255,255),-1,"Nombre habitants: %d",ed->maville->nb_habitants);
+    textprintf_ex(page,font,x+400,y+10,makecol(82,143,118),-1,"Argent: %d ECEFlouz",ed->maville->argent);
+    //textprintf_ex(page,font,x+400,y+10,makecol(255,255,255),-1,"Temps de jeu: %d:%d:%.0f",ed->maville->temps_de_jeu->heures,ed->maville->temps_de_jeu->minutes,ed->maville->temps_de_jeu->secondes);
+    textprintf_ex(page,font,x+12,y+30,makecol(255,228,54),-1,"Elec dispo:%d/%d",ed->maville->qte_elec.capacite_disponible,ed->maville->qte_elec.capacite_max);
+    textprintf_ex(page,font,x+400,y+30,makecol(0,0,255),-1,"Eau dispo:%d/%d",ed->maville->qte_eau.capacite_disponible,ed->maville->qte_eau.capacite_max);
+    //if(ed->maville->pause == PAUSE_ACTIVEE) textprintf_ex(page,font,700,40,makecol(0,0,0),-1,"PAUSE ACTIVEE");
+}
+
+void info_drag(t_editeur* ed)
+{
+
+
+    if (mouse_x >= ed->info->x && mouse_x <=  ed->info->x + 695 && mouse_y <=  ed->info->y && mouse_y >=  ed->info->y - 20)
+    {
+        rectfill(page,  ed->info->x,  ed->info->y-20,  ed->info->x+695,  ed->info->y, COUL_BORD);
+        if (mouse_b&1) {
+            ed->boite_a_outils->bouton_choisi = -1; // Si clic-droit alors on réinitialise le bouton choisi
+            ed->info->isCatch = 1;
+            //printf("%d", boiteaoutils->isCatch);
+
+        }
+    }
+
+    if ( ed->info->isCatch==1) {
+        ed->info->x = mouse_x-695/2;
+        if (mouse_y + 10 >= 20) {
+            ed->info->y = mouse_y + 10;
+        }
+        else {
+            ed->info->y = 20;
+        }
+        //boiteaoutils_afficher(boiteaoutils);
+    }
+
+    if (mouse_b&1)
+    { ed->info->isCatch = 0;}
+
+
+
+}
 
 /////////////////boitaoutil.c////////////////////////
 t_boite_a_outils* boiteaoutils_creer()
@@ -210,38 +274,78 @@ void boiteaoutils_chargerimages(t_boite_a_outils* boiteaoutils)
     }
 }
 
+void boiteaoutils_drag(t_boite_a_outils* boiteaoutils)
+{
+
+
+    if (mouse_x >= boiteaoutils->x && mouse_x <= boiteaoutils->x + NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+75 && mouse_y <= boiteaoutils->y && mouse_y >= boiteaoutils->y - 20)
+    {
+        rectfill(page, boiteaoutils->x, boiteaoutils->y-20, boiteaoutils->x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+75, boiteaoutils->y, COUL_BORD);
+        if (mouse_b&1) {
+            boiteaoutils->bouton_choisi = -1; // Si clic-droit alors on réinitialise le bouton choisi
+            boiteaoutils->isCatch = 1;
+            //printf("%d", boiteaoutils->isCatch);
+
+        }
+    }
+
+    if (boiteaoutils->isCatch==1) {
+        boiteaoutils->x = mouse_x-(NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS))/2;
+        if (mouse_y + 10 >= 20) {
+            boiteaoutils->y = mouse_y + 10;
+        }
+        else {
+            boiteaoutils->y = 20;
+        }
+        //boiteaoutils_afficher(boiteaoutils);
+    }
+
+    if (mouse_b&1)
+    {boiteaoutils->isCatch = 0;}
+
+
+
+}
+
 void boiteaoutils_afficher(t_boite_a_outils* boiteaoutils)
 {
     int x,y;
     int i,j,b;
+    //boiteaoutils->isCatch=0;
+
 
     x = boiteaoutils->x;
     y = boiteaoutils->y;
     //créer le rectangle de la boite à outil
-    rectfill(page, x, y, x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS), y+NB_BOUTONS_H*(LARGEUR_CASE+TAILLE_BORDS), COUL_FOND);
-    rect(page, x, y, x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS), y+NB_BOUTONS_H*(LARGEUR_CASE+TAILLE_BORDS), COUL_BORD);
+    rectfill(page, x, y-20, x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+75, y+NB_BOUTONS_H*(LARGEUR_CASE+TAILLE_BORDS), COUL_FOND);
+    rect(page, x, y-20, x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+75, y+NB_BOUTONS_H*(LARGEUR_CASE+TAILLE_BORDS), COUL_BORD);
+
+    textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+26,makecol(0,0,0),-1,"Route");
+    textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+78,makecol(0,0,0),-1,"Maison");
+    textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+130,makecol(0,0,0),-1,"Centrale");
+    textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+182,makecol(0,0,0),-1,"Chateau");
+    textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+234,makecol(0,0,0),-1,"Caserne");
+    textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+286,makecol(0,0,0),-1,"Vu sol");
+    textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+338,makecol(0,0,0),-1,"Vu eau");
+    textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+390,makecol(0,0,0),-1,"Vu elec");
+    textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+442,makecol(0,0,0),-1,"Pause");
+    textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+489,makecol(0,0,0),-1,"Sauv");
 
     //la remplir avec les images
-    for(i=0;i<NB_BOUTONS_H;i++)
-    {
-        for(j=0;j<NB_BOUTONS_W;j++)
-        {
-            if(boiteaoutils->bouton_choisi!=boiteaoutils->matbouton[i][j])
-            {
-                draw_sprite(page,boiteaoutils->img_bouton_off[i][j],x,y);
+    for(i=0;i<NB_BOUTONS_H;i++) {
+        for (j = 0; j < NB_BOUTONS_W; j++) {
+            if (boiteaoutils->bouton_choisi != boiteaoutils->matbouton[i][j]) {
+                draw_sprite(page, boiteaoutils->img_bouton_off[i][j], x, y);
+            } else {
+                draw_sprite(page, boiteaoutils->img_bouton_on[i][j], x, y);
             }
-            else
-            {
-                draw_sprite(page,boiteaoutils->img_bouton_on[i][j],x,y);
+            for (b = 0; b < TAILLE_BORDS; b++) {
+                rect(page, x - b, y - b, x + LARGEUR_CASE + b+75, y + LARGEUR_CASE + b, COUL_BORD);
             }
-            for(b=0;b<TAILLE_BORDS;b++)
-            {
-                rect(page,x-b,y-b,x+LARGEUR_CASE+b,y+LARGEUR_CASE+b,COUL_BORD);
-            }
-            x=x+LARGEUR_CASE+TAILLE_BORDS;
+            x = x + LARGEUR_CASE + TAILLE_BORDS;
         }
-        x= boiteaoutils->x;
-        y=y+LARGEUR_CASE+TAILLE_BORDS;
+        x = boiteaoutils->x;
+        y = y + LARGEUR_CASE + TAILLE_BORDS;
     }
 }
 
@@ -249,14 +353,14 @@ void boiteaoutils_gerer(t_boite_a_outils* boiteaoutils)
 {
     boiteaoutils_reinitialiser_boutons_uniques(boiteaoutils);
 
-    if((mouse_x>boiteaoutils->x)&&(mouse_x<boiteaoutils->x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS))&&(mouse_y>boiteaoutils->y)&&(mouse_y<boiteaoutils->y+NB_BOUTONS_H*(LARGEUR_CASE+TAILLE_BORDS)))
+    if((mouse_x>boiteaoutils->x)&&(mouse_x<boiteaoutils->x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+75)&&(mouse_y>boiteaoutils->y)&&(mouse_y<boiteaoutils->y+NB_BOUTONS_H*(LARGEUR_CASE+TAILLE_BORDS)))
     {//On récupère les coordonnées de la souris et on en profite pour changer de référentiel
-        int xc = (mouse_x-boiteaoutils->x)/(LARGEUR_CASE+TAILLE_BORDS);
+        int xc = (mouse_x-boiteaoutils->x)/(LARGEUR_CASE+TAILLE_BORDS+75);
         int yc = (mouse_y-boiteaoutils->y)/(LARGEUR_CASE+TAILLE_BORDS);
 
         //on donne à la boîte à outil la valeur de l'action sur laquelle à cliqué l'utilisateur afin de définir
         //son comportement par rapport au programme
-        if ( bouton=='g' && xc>=0 && xc<NB_BOUTONS_W && yc>=0 && yc<NB_BOUTONS_H )
+        if ( bouton=='g' && xc>=0 && xc<NB_BOUTONS_W+75 && yc>=0 && yc<NB_BOUTONS_H )
         {
             boiteaoutils->bouton_choisi=boiteaoutils->matbouton[yc][xc];
         }
@@ -1341,6 +1445,7 @@ t_editeur* editeur_allouer(int mode_de_jeu) // sera envoyé par le menu
 
     nouv->maville = ville_allouer_initialiser(mode_de_jeu);
     nouv->boite_a_outils = boiteaoutils_creer();
+    nouv->info=infos_creer();
 
     return nouv;
 }
@@ -1351,27 +1456,67 @@ void editeur_gerer(t_editeur* ed)
     ville_gerer(ed->maville, ed->boite_a_outils->bouton_choisi);
 }
 
-void editeur_afficher(t_editeur* ed)
+int editeur_afficher(t_editeur* ed)
 {
+    int quit;
     // on vide le buffer page
     clear_bitmap(page);
 
     rectfill(page, 0, 0, TAILLE_FENETRE_W, TAILLE_FENETRE_H, COUL_FOND1);
+    rectfill(page, 0, 0, 1024, 20, COUL_FOND);
+    rectfill(page, 10/2, 10/2, 20/2, 20/2, makecol(255,0,0));
+    rectfill(page, 20/2, 10/2, 30/2, 20/2, makecol(0,255,0));
+    rectfill(page, 10/2, 20/2, 20/2, 30/2, makecol(0,0,255));
+    rectfill(page, 20/2, 20/2, 30/2, 30/2, makecol(255,228,54));
+    rect(page, 0, 0, 1024, 20, COUL_BORD);
+    textprintf_ex(page,font,20,7,makecol(0,0,0),-1,"Windows");
+    if (mouse_x >= 950 && mouse_x <= 1024 && mouse_y <= 20 && mouse_y >=0)
+    {
+        rectfill(page, 950, 0, 1024, 20, makecol(255,0,0));
+        textprintf_ex(page,font,960,7,makecol(0,0,0),-1,"Quitter");
+        if (mouse_b&1) {
+            ed->boite_a_outils->bouton_choisi = -1; // Si clic-droit alors on réinitialise le bouton choisi
+            quit = 1;
+            //printf("%d", quit);
+
+        }
+    }
+    textprintf_ex(page,font,960,7,makecol(0,0,0),-1,"Quitter");
+    rect(page, 950, 0, 1024, 20, COUL_BORD);
+    rect(page, 951, 1, 1023, 19, COUL_BORD);
+    rect(page, 952, 2, 1022, 18, COUL_BORD);
+
     // on construit notre affichage sur le buffer page
     ville_afficher(ed->maville,ed->boite_a_outils->bouton_choisi);
+
     boiteaoutils_afficher(ed->boite_a_outils);
+
+    boiteaoutils_drag(ed->boite_a_outils);
+
+    info_afficher(ed);
+
+    info_drag(ed);
     /***** il faudra aussi rajouter les variables du style: argent, nombre d'habitants etc..*****/
-    textprintf_ex(page,font,112,20,makecol(255,255,255),-1,"Nombre habitants: %d",ed->maville->nb_habitants);
-    textprintf_ex(page,font,300,20,makecol(255,255,255),-1,"Argent: %d",ed->maville->argent);
+    /*textprintf_ex(page,font,112,20,makecol(255,255,255),-1,"Nombre habitants: %d",ed->maville->nb_habitants);
+    textprintf_ex(page,font,300,20,makecol(255,255,255),-1,"Argent: %d ECEFlouz",ed->maville->argent);
     textprintf_ex(page,font,500,20,makecol(255,255,255),-1,"Temps de jeu: %d:%d:%.0f",ed->maville->temps_de_jeu->heures,ed->maville->temps_de_jeu->minutes,ed->maville->temps_de_jeu->secondes);
     textprintf_ex(page,font,112,40,makecol(255,255,255),-1,"Elec dispo:%d/%d",ed->maville->qte_elec.capacite_disponible,ed->maville->qte_elec.capacite_max);
     textprintf_ex(page,font,500,40,makecol(255,255,255),-1,"Eau dispo:%d/%d",ed->maville->qte_eau.capacite_disponible,ed->maville->qte_eau.capacite_max);
     if(ed->maville->pause == PAUSE_ACTIVEE) textprintf_ex(page,font,700,40,makecol(255,255,255),-1,"PAUSE ACTIVEE");
-
+*/
+    rectfill(page, 910, 650, 1024, 768, COUL_FOND);
+    textprintf_ex(page,font,915,660,makecol(255,255,255),-1,"Temps de jeu:");
+    textprintf_ex(page,font,920,680,makecol(255,255,255),-1,"%d:%d:%.0f",ed->maville->temps_de_jeu->heures,ed->maville->temps_de_jeu->minutes,ed->maville->temps_de_jeu->secondes);
+    if(ed->maville->pause == PAUSE_ACTIVEE) textprintf_ex(page,font,915,700,makecol(255,255,255),-1,"PAUSE ACTIVEE");
+    textprintf_ex(page,font,915,720,makecol(255,255,255),-1,"Cliquez sur S");
+    textprintf_ex(page,font,915,735,makecol(255,255,255),-1,"pour couper ");
+    textprintf_ex(page,font,915,750,makecol(255,255,255),-1,"le son");
     // on affiche le buffer page sur l'écran
     //blit(page,screen,0,0,0,0, SCREEN_W, SCREEN_H);
     stretch_blit(page, screen, 0, 0, TAILLE_FENETRE_W, TAILLE_FENETRE_H, 0, 0, SCREEN_W, SCREEN_H);// permet de gérer les ordis
     // incapables d'ouvrir un mode graphique 1024*768
+    //rest(150);
+    return quit;
 }
 
 void editeur_liberer(t_editeur* ed)
@@ -1381,6 +1526,8 @@ void editeur_liberer(t_editeur* ed)
 
     free(ed);
 }
+
+
 
 /////////////////file.c////////////////////////
 // Alloue une file
@@ -2882,7 +3029,7 @@ void menu_afficher(t_graphMenu graph)
                 if (choix != -1)
                 {
                     show_mouse(screen);
-                    menu_boucle_jeu(choix,NULL);
+                    menu_boucle_jeu(choix,NULL,graph);
                 }
             }
             if (mx>=graph.boutons_x[MENU_BOUTON_CHARGER] && mx<=(graph.boutons_x[MENU_BOUTON_CHARGER]+graph.img_boutons_off[MENU_BOUTON_CHARGER]->w) && my>=graph.boutons_y[MENU_BOUTON_CHARGER] && my<=(graph.boutons_y[MENU_BOUTON_CHARGER]+graph.img_boutons_off[MENU_BOUTON_CHARGER]->h))
@@ -2892,7 +3039,7 @@ void menu_afficher(t_graphMenu graph)
                 if(remplit_chemin_chargement(nom_fichier))
                 {
                     show_mouse(screen);
-                    menu_boucle_jeu(CHARGER,nom_fichier);
+                    menu_boucle_jeu(CHARGER,nom_fichier,graph);
                 }
             }
             if (mx>=graph.boutons_x[MENU_BOUTON_CREDITS] && mx<=(graph.boutons_x[MENU_BOUTON_CREDITS]+graph.img_boutons_off[MENU_BOUTON_CREDITS]->w) && my>=graph.boutons_y[MENU_BOUTON_CREDITS] && my<=(graph.boutons_y[MENU_BOUTON_CREDITS]+graph.img_boutons_off[MENU_BOUTON_CREDITS]->h))
@@ -3012,9 +3159,10 @@ int menu_selection_mode(t_graphMenu graph)
     return mode;
 }
 
-void menu_boucle_jeu(int mode_choisi,const char* nom_fichier)
+void menu_boucle_jeu(int mode_choisi,const char* nom_fichier,t_graphMenu graph)
 {
     t_editeur* ed = NULL;
+    int quitte=0,son=0;
 
     switch(mode_choisi)
     {
@@ -3030,12 +3178,24 @@ void menu_boucle_jeu(int mode_choisi,const char* nom_fichier)
             break;
     }
 
-    while(!key[KEY_ESC])
+    while((!key[KEY_ESC])&&(quitte != 1))
     {
+
+        if(key_press[KEY_S] && son==0)
+        {
+            son= 1;
+            play_sample(graph.music, 255, 127, 1000, 1); // play the music
+        }
+        else if(key_press[KEY_S] && son==1)
+        {
+            son= 0;
+            stop_sample(graph.music);
+        }
+
         rafraichir_clavier_souris();
         editeur_gerer(ed);
-        editeur_afficher(ed);
-        rest(20);
+        quitte=editeur_afficher(ed);
+        rest(0.1);
     }
 
     editeur_liberer(ed);
