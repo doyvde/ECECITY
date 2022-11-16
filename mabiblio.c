@@ -2323,6 +2323,7 @@ void liste_vider(t_liste* lst, tpf_detruire detruire)
     }
 }
 
+
 // Constructeur par copie
 t_liste* liste_copier(t_liste* lst, tpf_copier copier)
 {
