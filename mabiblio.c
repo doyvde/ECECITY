@@ -322,8 +322,8 @@ void boiteaoutils_afficher(t_boite_a_outils* boiteaoutils)
 
     textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+26,makecol(0,0,0),-1,"Route");
     textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+78,makecol(0,0,0),-1,"Maison");
-    textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+130,makecol(0,0,0),-1,"Centrale");
-    textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+182,makecol(0,0,0),-1,"Chateau");
+    textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+130,makecol(0,0,0),-1,"Chateau");
+    textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+182,makecol(0,0,0),-1,"Centrale");
     textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+234,makecol(0,0,0),-1,"Caserne");
     textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+286,makecol(0,0,0),-1,"Vu sol");
     textprintf_ex(page,font,x+NB_BOUTONS_W*(LARGEUR_CASE+TAILLE_BORDS)+2,y+338,makecol(0,0,0),-1,"Vu eau");

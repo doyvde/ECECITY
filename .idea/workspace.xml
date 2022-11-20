@@ -11,7 +11,7 @@
       <config projectName="ECECITY" targetName="ECECITY" />
     </generated>
   </component>
-  <component name="CMakeSettings">
+  <component name="CMakeSettings" AUTO_RELOAD="true">
     <configurations>
       <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
     </configurations>
@@ -19,6 +19,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fc94bb9e-1034-4f8c-9aa0-0e9b41f0f01e" name="Changes" comment="amelioration du travail d'antoine">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mabiblio.c" beforeDir="false" afterPath="$PROJECT_DIR$/mabiblio.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +32,9 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
@@ -57,12 +60,12 @@
   }
 }</component>
   <component name="RunManager">
-    <configuration name="ECECITY" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ECECITY" TARGET_NAME="ECECITY" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ECECITY" RUN_TARGET_NAME="ECECITY">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration name="ECECITY" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ECECITY" TARGET_NAME="ECECITY" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ECECITY" RUN_TARGET_NAME="ECECITY">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -77,8 +80,22 @@
       <option name="presentableId" value="Default" />
       <updated>1668611274360</updated>
       <workItem from="1668611275563" duration="129000" />
-      <workItem from="1668615624900" duration="1000" />
+      <workItem from="1668615624900" duration="592000" />
+      <workItem from="1668773862238" duration="2017000" />
+      <workItem from="1668777580595" duration="102000" />
+      <workItem from="1668860006219" duration="1696000" />
+      <workItem from="1668865665858" duration="351000" />
+      <workItem from="1668934427105" duration="685000" />
+      <workItem from="1668940728080" duration="4611000" />
     </task>
+    <task id="LOCAL-00001" summary="amelioration du travail d'antoine">
+      <created>1668615690545</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1668615690545</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -94,5 +111,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="amelioration du travail d'antoine" />
+    <option name="LAST_COMMIT_MESSAGE" value="amelioration du travail d'antoine" />
   </component>
 </project>
