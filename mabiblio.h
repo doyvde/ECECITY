@@ -1004,9 +1004,11 @@ void sous_menu_charger(t_graphsousMenu* g);
 /////////////////route.h////////////////////////
 typedef struct route
 {
-    int type;
+
     int case_de_referenceX;
     int case_de_referenceY;
+    int type;
+
 }t_route;
 
 t_route* route_creer();

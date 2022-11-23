@@ -17,9 +17,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc94bb9e-1034-4f8c-9aa0-0e9b41f0f01e" name="Changes" comment="amelioration du travail d'antoine">
+    <list default="true" id="fc94bb9e-1034-4f8c-9aa0-0e9b41f0f01e" name="Changes" comment="accesibilité menu">
+      <change afterPath="$PROJECT_DIR$/mesfonctions.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mabiblio.c" beforeDir="false" afterPath="$PROJECT_DIR$/mabiblio.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mabiblio.h" beforeDir="false" afterPath="$PROJECT_DIR$/mabiblio.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,11 +31,13 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ClangdSettings">
+    <option name="clangTidyViaClangd" value="false" />
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -47,24 +53,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/antoi/Downloads/ECECITY&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;clion.custom.compiler.configurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "C:/Users/antoi/Downloads/ECECITY",
+    "settings.editor.selected.configurable": "clion.custom.compiler.configurable",
+    "structure.view.defaults.are.configured": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ECECITY" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ECECITY" TARGET_NAME="ECECITY" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ECECITY" RUN_TARGET_NAME="ECECITY">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -86,7 +88,15 @@
       <workItem from="1668860006219" duration="1696000" />
       <workItem from="1668865665858" duration="351000" />
       <workItem from="1668934427105" duration="685000" />
-      <workItem from="1668940728080" duration="4611000" />
+      <workItem from="1668940728080" duration="7182000" />
+      <workItem from="1669024063147" duration="438000" />
+      <workItem from="1669024993634" duration="303000" />
+      <workItem from="1669034775124" duration="388000" />
+      <workItem from="1669102785117" duration="1189000" />
+      <workItem from="1669118598660" duration="1191000" />
+      <workItem from="1669208122560" duration="1451000" />
+      <workItem from="1669209954230" duration="6247000" />
+      <workItem from="1669228417795" duration="5714000" />
     </task>
     <task id="LOCAL-00001" summary="amelioration du travail d'antoine">
       <created>1668615690545</created>
@@ -95,7 +105,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668615690545</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="accesibilité menu">
+      <created>1668963204470</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1668963204470</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -114,6 +131,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="amelioration du travail d'antoine" />
-    <option name="LAST_COMMIT_MESSAGE" value="amelioration du travail d'antoine" />
+    <MESSAGE value="accesibilité menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="accesibilité menu" />
   </component>
 </project>

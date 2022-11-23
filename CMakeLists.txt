@@ -3,7 +3,7 @@ project(ECECITY C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(ECECITY main.c mabiblio.c mabiblio.h)
+add_executable(ECECITY main.c mabiblio.c mabiblio.h mesfonctions.c)
 
 target_link_libraries(ECECITY -lmingw32 -lalleg44)
 
