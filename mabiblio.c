@@ -408,30 +408,6 @@ int caserne_depassement_matrice(int colonne,int ligne)
     return depasse;
 }
 
-void caserne_placer(t_caserne* caserne,int x,int y,t_case*** kase)
-{
-    int i,j;
-    caserne->case_de_referenceX=x;
-    caserne->case_de_referenceY=y;
-    for(i=x;i<x+CASERNE_W;i++)
-    {
-        for(j=y;j<y+CASERNE_H;j++)
-        {
-            kase[j][i]->type=CASERNE;
-            kase[j][i]->elem=caserne;
-        }
-    }
-}
-
-void caserne_afficher(t_caserne* caserne,int niveau)
-{
-    if(niveau==NIVEAU_SOL)
-    {
-        draw_sprite(graphs->buffer_ville,graphs->caserne,1+TAILLE_CASE*caserne->case_de_referenceX,1+TAILLE_CASE*caserne->case_de_referenceY);
-    }
-    draw_trans_sprite(graphs->buffer_ville,graphs->caserne,1+TAILLE_CASE*caserne->case_de_referenceX,1+TAILLE_CASE*caserne->case_de_referenceY);
-}
-
 /////////////////centrale.c////////////////////////
 t_centrale* centrale_creer()
 {
@@ -445,14 +421,6 @@ t_centrale* centrale_creer()
     nouv->id_centrale.caseX = -1;
     nouv->id_centrale.caseX = -1;
     return nouv;
-}
-
-void centrale_distribuer(t_centrale* centrale,t_habitation* habitation,int quantitee)
-{
-    habitation->id_centrale_fournisseuse.caseX = centrale->id_centrale.caseX; // on recopie l'ID de la centrale
-    habitation->id_centrale_fournisseuse.caseY = centrale->id_centrale.caseY; // on recopie l'ID de la centrale
-    centrale->capacite.capacite_disponible-=quantitee;
-    habitation->electricite=1;
 }
 
 int centrale_place_libre(int col,int lig,t_case*** kase)
@@ -486,45 +454,6 @@ int centrale_depassement_matrice(int colonne,int ligne)
     return depasse;
 }
 
-void centrale_placer(t_centrale* centrale,int col,int lig,t_case*** kase)
-{
-    int i,j;
-    centrale->case_de_referenceX=col;
-    centrale->case_de_referenceY=lig;
-    centrale->id_centrale.caseX = col;
-    centrale->id_centrale.caseY = lig;
-    for(i=lig;i<lig+CENTRALE_H;i++)
-    {
-        for(j=col;j<col+CENTRALE_W;j++)
-        {
-            kase[i][j]->type=CENTRALE;
-            kase[i][j]->elem=centrale;
-        }
-    }
-}
-
-void centrale_afficher(t_centrale* centrale,int niveau)
-{
-    if(niveau==NIVEAU_EAU)
-    {
-        draw_trans_sprite(graphs->buffer_ville,graphs->centrale,1+TAILLE_CASE*centrale->case_de_referenceX,1+TAILLE_CASE*centrale->case_de_referenceY);
-    }
-    else
-    {
-        draw_sprite(graphs->buffer_ville,graphs->centrale,1+TAILLE_CASE*centrale->case_de_referenceX,1+TAILLE_CASE*centrale->case_de_referenceY);
-    }
-}
-
-void centrale_debut_tour(t_centrale* centrale)
-{
-    centrale->capacite.capacite_disponible = CAPACITE_CENTRALE;
-}
-
-int centrale_elec_disponible(t_centrale* centrale)
-{
-    return centrale->capacite.capacite_disponible;
-}
-
 /////////////////chateau.c////////////////////////
 t_chateau* chateau_creer()
 {
@@ -539,11 +468,6 @@ t_chateau* chateau_creer()
     nouv->id_chateau.caseY = -1;
 
     return nouv;
-}
-
-void chateau_debut_tour(t_chateau* chateau)
-{
-    chateau->capacite.capacite_disponible=CAPACITE_CHATEAU;
 }
 
 int chateau_place_libre(int col,int lig,t_case*** kase)
@@ -575,35 +499,6 @@ int chateau_depassement_matrice(int colonne,int ligne)
         depasse=0;
     }
     return depasse;
-}
-
-void chateau_placer(t_chateau* chateau,int col,int lig,t_case*** kase)
-{
-    int i,j;
-    chateau->case_de_referenceX=col;
-    chateau->case_de_referenceY=lig;
-    chateau->id_chateau.caseX = col;
-    chateau->id_chateau.caseY = lig;
-    for(i=col;i<col+CHATEAU_W;i++)
-    {
-        for(j=lig;j<lig+CHATEAU_H;j++)
-        {
-            kase[j][i]->type=CHATEAU;
-            kase[j][i]->elem=chateau;
-        }
-    }
-}
-
-void chateau_afficher(t_chateau* chateau,int niveau)
-{
-    if(niveau==NIVEAU_ELEC)
-    {
-        draw_trans_sprite(graphs->buffer_ville,graphs->chateau,1+TAILLE_CASE*chateau->case_de_referenceX,1+TAILLE_CASE*chateau->case_de_referenceY);
-    }
-    else
-    {
-        draw_sprite(graphs->buffer_ville,graphs->chateau,1+TAILLE_CASE*chateau->case_de_referenceX,1+TAILLE_CASE*chateau->case_de_referenceY);
-    }
 }
 
 int chateau_distribuer(t_chateau* chateau,t_habitation* habitation)
@@ -676,11 +571,6 @@ int chateau_distribuer(t_chateau* chateau,t_habitation* habitation)
     return quantitee;
 }
 
-int chateau_eau_disponible(t_chateau* chateau)
-{
-    return chateau->capacite.capacite_disponible;
-}
-
 /////////////////collection_casernes.c////////////////////////
 t_collection_casernes* collection_casernes_creer()
 {
@@ -696,16 +586,11 @@ void collection_casernes_ajouter_caserne(t_collection_casernes* collection_caser
 {
     if(collection_casernes->taille_actuelle==collection_casernes->taille_max)
     {
-        collection_casernes_reallouer(collection_casernes);
+        collection_casernes->taille_max=3*collection_casernes->taille_max/2;
+        collection_casernes->caserne=realloc(collection_casernes->caserne,collection_casernes->taille_max*sizeof(t_caserne*));
     }
     collection_casernes->caserne[collection_casernes->taille_actuelle]=new_caserne;
     collection_casernes->taille_actuelle++;
-}
-
-void collection_casernes_reallouer(t_collection_casernes* collection_casernes)
-{
-    collection_casernes->taille_max=3*collection_casernes->taille_max/2;
-    collection_casernes->caserne=realloc(collection_casernes->caserne,collection_casernes->taille_max*sizeof(t_caserne*));
 }
 
 int** collection_casernes_tableau_longueurs(t_collection_casernes* collection_casernes,t_case*** kase,t_bfs* bfs,t_collection_habitation* collection_habitation)
@@ -740,15 +625,6 @@ void collection_casernes_proteger(t_collection_casernes* collection_casernes,t_c
     }
 }
 
-void collection_casernes_afficher(t_collection_casernes* collection_casernes,int niveau)
-{
-    int i;
-    for(i=0; i<collection_casernes->taille_actuelle; i++)
-    {
-        caserne_afficher(collection_casernes->caserne[i],niveau);
-    }
-}
-
 /////////////////collection_centrales.c////////////////////////
 t_collection_centrale* collection_centrale_creer()
 {
@@ -764,25 +640,11 @@ void collection_centrale_ajouter_centrale(t_collection_centrale* collection_cent
 {
     if(collection_centrale->taille_actuelle==collection_centrale->taille_max)
     {
-        collection_centrale_reallouer(collection_centrale);
+        collection_centrale->taille_max=3*collection_centrale->taille_max/2;
+        collection_centrale->centrale=realloc(collection_centrale->centrale,collection_centrale->taille_max*sizeof(t_centrale*));
     }
     collection_centrale->centrale[collection_centrale->taille_actuelle]=new_centrale;
     collection_centrale->taille_actuelle++;
-}
-
-void collection_centrale_reallouer(t_collection_centrale* collection_centrale)
-{
-    collection_centrale->taille_max=3*collection_centrale->taille_max/2;
-    collection_centrale->centrale=realloc(collection_centrale->centrale,collection_centrale->taille_max*sizeof(t_centrale*));
-}
-
-void collection_centrale_afficher(t_collection_centrale* collection_centrale,int niveau)
-{
-    int i;
-    for(i=0; i<collection_centrale->taille_actuelle; i++)
-    {
-        centrale_afficher(collection_centrale->centrale[i],niveau);
-    }
 }
 
 void collection_centrale_distribuer(t_collection_centrale* collection_centrale,t_collection_habitation* collection_habitation,int** longueurs)
@@ -799,19 +661,13 @@ void collection_centrale_distribuer(t_collection_centrale* collection_centrale,t
                 quantitee=habitation_nbhabitants(collection_habitation->habitation[j]); ///retourne le nombre d'habitant en fonction du stade de développement
                 if(collection_centrale->centrale[i]->capacite.capacite_disponible>=quantitee)
                 {
-                    centrale_distribuer(collection_centrale->centrale[i],collection_habitation->habitation[j],quantitee);
+                    collection_habitation->habitation[j]->id_centrale_fournisseuse.caseX = collection_centrale->centrale[i]->id_centrale.caseX; // on recopie l'ID de la centrale
+                    collection_habitation->habitation[j]->id_centrale_fournisseuse.caseY = collection_centrale->centrale[i]->id_centrale.caseY; // on recopie l'ID de la centrale
+                    collection_centrale->centrale[i]->capacite.capacite_disponible-=quantitee;
+                    collection_habitation->habitation[j]->electricite=1;
                 }
             }
         }
-    }
-}
-
-void collection_centrale_debut_tour(t_collection_centrale* collection_centrale)
-{
-    int i;
-    for(i=0; i<collection_centrale->taille_actuelle; i++)
-    {
-        centrale_debut_tour(collection_centrale->centrale[i]);
     }
 }
 
@@ -821,7 +677,7 @@ int collection_centrale_elec_disponible(t_collection_centrale* collection_centra
     int i;
     for(i=0;i<collection_centrale->taille_actuelle;i++)
     {
-        elec_totale_dispo += centrale_elec_disponible(collection_centrale->centrale[i]);
+        elec_totale_dispo += collection_centrale->centrale[i]->capacite.capacite_disponible;
     }
     return elec_totale_dispo;
 }
@@ -870,25 +726,11 @@ void collection_chateau_ajouter_chateau(t_collection_chateau* collection_chateau
 {
     if(collection_chateau->taille_actuelle==collection_chateau->taille_max)
     {
-        collection_chateau_reallouer(collection_chateau);
+        collection_chateau->taille_max=3*collection_chateau->taille_max/2;
+        collection_chateau->chateau=realloc(collection_chateau->chateau,collection_chateau->taille_max*sizeof(t_chateau*));
     }
     collection_chateau->chateau[collection_chateau->taille_actuelle]=new_chateau;
     collection_chateau->taille_actuelle++;
-}
-
-void collection_chateau_reallouer(t_collection_chateau* collection_chateau)
-{
-    collection_chateau->taille_max=3*collection_chateau->taille_max/2;
-    collection_chateau->chateau=realloc(collection_chateau->chateau,collection_chateau->taille_max*sizeof(t_chateau*));
-}
-
-void collection_chateau_afficher(t_collection_chateau* collection_chateau,int niveau)
-{
-    int i;
-    for(i=0; i<collection_chateau->taille_actuelle; i++)
-    {
-        chateau_afficher(collection_chateau->chateau[i],niveau);
-    }
 }
 
 int** collection_chateau_tableau_longueurs(t_collection_chateau* collection_chateau,t_case*** kase,t_bfs* bfs,t_collection_habitation* collection_habitation)
@@ -910,75 +752,70 @@ int** collection_chateau_tableau_longueurs(t_collection_chateau* collection_chat
 
 void collection_chateau_distribuer(t_collection_chateau* collection_chateau,t_collection_habitation* collection_habitation,int** longueurs_chateaux_habitations)
 {
-    if((collection_habitation->taille_actuelle!=0)&&(collection_chateau->taille_actuelle!=0))
-    {
-        collection_chateau_distribuer_minimiser(collection_chateau,collection_habitation,longueurs_chateaux_habitations);
-    }
-}
-
-void collection_chateau_distribuer_minimiser(t_collection_chateau* collection_chateau,t_collection_habitation* collection_habitation,int** longueur)
-{
     int i=0;
     int eau_dispo;
     int taille1,taille2,compteur,j,compteur2,k,l;
     int mini,distributeur=0,receveur;
-    //pour toutes les maisons
-    while(i<collection_habitation->taille_actuelle)
-    {//on cherche TOUTES les plus grosses
-        compteur=i;
-        taille1=collection_habitation->habitation[i]->stade;
-        taille2=collection_habitation->habitation[i]->stade;
-        while(taille1==taille2)
-        {
-            compteur++;
-            if(compteur<collection_habitation->taille_actuelle) taille2=collection_habitation->habitation[compteur]->stade;
-            else taille2=INFINI;
-        }
-        //Pour CHACUNE de ces habitations (il y en a compteur-1)
-        for(l=i;l<compteur;l++)
-        {
-            mini=INFINI;
-            receveur=-1;
-            for(k=0;k<collection_chateau->taille_actuelle;k++)
+    if((collection_habitation->taille_actuelle!=0)&&(collection_chateau->taille_actuelle!=0))
+    {
+        //pour toutes les maisons
+        while(i<collection_habitation->taille_actuelle)
+        {//on cherche TOUTES les plus grosses
+            compteur=i;
+            taille1=collection_habitation->habitation[i]->stade;
+            taille2=collection_habitation->habitation[i]->stade;
+            while(taille1==taille2)
             {
-                for(j=i;j<compteur;j++)
+                compteur++;
+                if(compteur<collection_habitation->taille_actuelle) taille2=collection_habitation->habitation[compteur]->stade;
+                else taille2=INFINI;
+            }
+            //Pour CHACUNE de ces habitations (il y en a compteur-1)
+            for(l=i;l<compteur;l++)
+            {
+                mini=INFINI;
+                receveur=-1;
+                for(k=0;k<collection_chateau->taille_actuelle;k++)
                 {
-                    if((longueur[k][j]!=0)&&(longueur[k][j]<mini)&&(collection_habitation->habitation[j]->electricite==1)&&(collection_habitation->habitation[j]->eau!=1))
+                    for(j=i;j<compteur;j++)
                     {
-                        mini=longueur[k][j];
-                        receveur=j;
+                        if((longueurs_chateaux_habitations[k][j]!=0)&&(longueurs_chateaux_habitations[k][j]<mini)&&(collection_habitation->habitation[j]->electricite==1)&&(collection_habitation->habitation[j]->eau!=1))
+                        {
+                            mini=longueurs_chateaux_habitations[k][j];
+                            receveur=j;
+                        }
                     }
                 }
-            }
-            if(receveur!=-1)
-            {
-                //on compte l'eau disponible sur le réseau
-                eau_dispo=0;
-                for(compteur2=0;compteur2<collection_chateau->taille_actuelle;compteur2++)
+                if(receveur!=-1)
                 {
-                    if(longueur[compteur2][receveur]!=0)
-                    {
-                        eau_dispo+=collection_chateau->chateau[compteur2]->capacite.capacite_disponible;
-                    }
-                }//TANT que l'habitation n'est pas alimenté et que l'eau disponible n'est pas épuisée et qu'on a pas atteint la limite des fournisseur
-                while((collection_habitation->habitation[receveur]->eau!=1)&&(eau_dispo>0)&&(collection_habitation->habitation[receveur]->chateaux_fournisseurs[FOURNISSEUR_MAX-1].qte_eau_distribuee==0))
-                {
-                    //On recherche la centrale sur le réseau la plus proche
-                    mini=INFINI;
+                    //on compte l'eau disponible sur le réseau
+                    eau_dispo=0;
                     for(compteur2=0;compteur2<collection_chateau->taille_actuelle;compteur2++)
                     {
-                        if((longueur[compteur2][receveur]!=0)&&(longueur[compteur2][receveur]<mini)&&(collection_chateau->chateau[compteur2]->capacite.capacite_disponible!=0))
+                        if(longueurs_chateaux_habitations[compteur2][receveur]!=0)
                         {
-                            distributeur=compteur2;
-                            mini=longueur[compteur2][receveur];
+                            eau_dispo+=collection_chateau->chateau[compteur2]->capacite.capacite_disponible;
                         }
-                    }//on alimente l'habitation et on tient à jours la quantitee d'eau dispo
-                    eau_dispo-=chateau_distribuer(collection_chateau->chateau[distributeur],collection_habitation->habitation[receveur]);
+                    }//TANT que l'habitation n'est pas alimenté et que l'eau disponible n'est pas épuisée et qu'on a pas atteint la limite des fournisseur
+                    while((collection_habitation->habitation[receveur]->eau!=1)&&(eau_dispo>0)&&(collection_habitation->habitation[receveur]->chateaux_fournisseurs[FOURNISSEUR_MAX-1].qte_eau_distribuee==0))
+                    {
+                        //On recherche la centrale sur le réseau la plus proche
+                        mini=INFINI;
+                        for(compteur2=0;compteur2<collection_chateau->taille_actuelle;compteur2++)
+                        {
+                            if((longueurs_chateaux_habitations[compteur2][receveur]!=0)&&(longueurs_chateaux_habitations[compteur2][receveur]<mini)&&(collection_chateau->chateau[compteur2]->capacite.capacite_disponible!=0))
+                            {
+                                distributeur=compteur2;
+                                mini=longueurs_chateaux_habitations[compteur2][receveur];
+                            }
+                        }//on alimente l'habitation et on tient à jours la quantitee d'eau dispo
+                        eau_dispo-=chateau_distribuer(collection_chateau->chateau[distributeur],collection_habitation->habitation[receveur]);
+                    }
                 }
-            }
 
+            }
+            i=compteur;
         }
-        i=compteur;
     }
 }
 
@@ -989,19 +826,10 @@ int collection_chateau_eau_disponible(t_collection_chateau* collection_chateau)
 
     for(i=0; i<collection_chateau->taille_actuelle; i++)
     {
-        eau_totale_dispo = eau_totale_dispo + chateau_eau_disponible(collection_chateau->chateau[i]);
+        eau_totale_dispo = eau_totale_dispo + collection_chateau->chateau[i]->capacite.capacite_disponible;;
     }
 
     return eau_totale_dispo;
-}
-
-void collection_chateau_debut_tour(t_collection_chateau* collection_chateau)
-{
-    int i;
-    for(i=0; i<collection_chateau->taille_actuelle; i++)
-    {
-        chateau_debut_tour(collection_chateau->chateau[i]);
-    }
 }
 
 int* collection_chateau_tableau_capacite(t_collection_chateau* collection_chateau)
@@ -1047,23 +875,11 @@ void collection_habitation_ajouter_habitation(t_collection_habitation* collectio
     collection_habitation->taille_actuelle++;
 }
 
-void collection_habitation_actualiser_timer(t_collection_habitation* collection_habitation)
-{
-    int i;
-
-    for(i=0;i<collection_habitation->taille_actuelle;i++)
-    {
-        habitation_actualiser_timer(collection_habitation->habitation[i]);
-    }
-}
-
 void collection_habitation_reallouer(t_collection_habitation* collection_habitation)
 {
     collection_habitation->taille_max=3*collection_habitation->taille_max/2;
     collection_habitation->habitation=realloc(collection_habitation->habitation,collection_habitation->taille_max*sizeof(t_habitation*));
 }
-
-
 
 void collection_habitation_evolution(t_collection_habitation* collection_habitation,int mode, int* argent,int nb_chateaux,int nb_centrales,int** longueurs_chateaux,int** longueurs_centrales,int* capacite_chateaux,int* capacite_centrale)
 {
@@ -1082,7 +898,35 @@ void collection_habitation_debut_tour(t_collection_habitation* collection_habita
     int i;
     for(i=0;i<collection_habitation->taille_actuelle;i++)
     {
-        habitation_debut_tour(collection_habitation->habitation[i]);
+        int l,alea;
+        collection_habitation->habitation[i]->eau =0;
+        collection_habitation->habitation[i]->electricite=0;
+        collection_habitation->habitation[i]->id_centrale_fournisseuse.caseX = -1;
+        collection_habitation->habitation[i]->id_centrale_fournisseuse.caseX = -1;
+        ///DECLARATION ALEATOIRE D'UN INCENDIE
+        if(collection_habitation->habitation[i]->stade>=STADE_CABANE)
+        {
+            if(!collection_habitation->habitation[i]->feu)
+            {
+                alea=rand()%PROBABILITE_INCENDIE+1;
+                if(alea==PROBABILITE_INCENDIE)
+                {
+                    collection_habitation->habitation[i]->feu=EN_FEU;
+                }
+            }
+            else
+            {
+                collection_habitation->habitation[i]->feu+=1;
+            }
+        }
+        collection_habitation->habitation[i]->protegee=PAS_PROTEGEE;
+
+        for(l=0;l<FOURNISSEUR_MAX;l++)
+        {
+            collection_habitation->habitation[i]->chateaux_fournisseurs[l].qte_eau_distribuee=0;
+            collection_habitation->habitation[i]->chateaux_fournisseurs[l].id_fournisseur.caseX= -1;
+            collection_habitation->habitation[i]->chateaux_fournisseurs[l].id_fournisseur.caseY= -1;
+        }
     }
     collection_habitation_trier(collection_habitation);
     *nb_habitants = collection_habitation_nombre_habitants(collection_habitation);
@@ -1872,7 +1716,7 @@ int habitation_nbhabitants(t_habitation* habitation)
     return habitants;
 }
 
-int habitation_comparer(const void* a, const void* b) // il manque un degré de const, pourquoi?
+int habitation_comparer(const void* a, const void* b)
 {
     const t_habitation* const* h1 = a; // en théorie ici il manque un degré de "const", comment savoir que c'était un pointeur constant sur pointeur (non constant) d'habitation constante qu'on voulait??
     const t_habitation* const* h2 = b;
@@ -1886,23 +1730,6 @@ int habitation_comparer(const void* a, const void* b) // il manque un degré de 
     }
     else
         return 0;
-}
-
-void habitation_charger(t_habitation* hab, FILE* fp)
-{
-    fscanf(fp,"%d %d %d %f %d",&hab->case_de_referenceX,&hab->case_de_referenceY,&hab->stade,&hab->chrono,&hab->feu);
-}
-
-void habitation_sauvegarder(t_habitation* hab, FILE* fp)
-{
-    fprintf(fp,"%d %d %d %f %d\n",hab->case_de_referenceX, hab->case_de_referenceY,hab->stade, hab->chrono, hab->feu);
-}
-
-
-
-void habitation_actualiser_timer(t_habitation* habitation)
-{
-    habitation->chrono = habitation->chrono + PAS_DU_TIMER;
 }
 
 void habitation_evoluer(t_habitation* habitation,int mode,int* argent,int nb_chateaux,int nb_centrales,int** longueurs_chateaux,int** longueurs_centrales,int* capacite_chateau,int* capacite_centrale)
@@ -2044,39 +1871,6 @@ void habitation_evolution_capitaliste(t_habitation* habitation,int nb_chateaux,i
 int habitation_recolter_impots(t_habitation* hab)
 {
     return IMPOTS_PAR_HABITANT*habitation_nbhabitants(hab);
-}
-
-void habitation_debut_tour(t_habitation* hab)
-{
-    int i,alea;
-    hab->eau =0;
-    hab->electricite=0;
-    hab->id_centrale_fournisseuse.caseX = -1;
-    hab->id_centrale_fournisseuse.caseX = -1;
-    ///DECLARATION ALEATOIRE D'UN INCENDIE
-    if(hab->stade>=STADE_CABANE)
-    {
-        if(!hab->feu)
-        {
-            alea=rand()%PROBABILITE_INCENDIE+1;
-            if(alea==PROBABILITE_INCENDIE)
-            {
-                hab->feu=EN_FEU;
-            }
-        }
-        else
-        {
-            hab->feu+=1;
-        }
-    }
-    hab->protegee=PAS_PROTEGEE;
-
-    for(i=0;i<FOURNISSEUR_MAX;i++)
-    {
-        hab->chateaux_fournisseurs[i].qte_eau_distribuee=0;
-        hab->chateaux_fournisseurs[i].id_fournisseur.caseX= -1;
-        hab->chateaux_fournisseurs[i].id_fournisseur.caseY= -1;
-    }
 }
 
 /////////////////liste_generique_simple_chainage.c////////////////////////
@@ -2719,7 +2513,7 @@ void ville_sauvegarder(const char* nom_fichier,t_ville* v)
     fprintf(fp,"%d\n",v->collec_habitations->taille_actuelle);
     for(i=0; i<v->collec_habitations->taille_actuelle; i++)
     {
-        habitation_sauvegarder(v->collec_habitations->habitation[i],fp);
+        fprintf(fp,"%d %d %d %f %d\n",v->collec_habitations->habitation[i]->case_de_referenceX, v->collec_habitations->habitation[i]->case_de_referenceY,v->collec_habitations->habitation[i]->stade, v->collec_habitations->habitation[i]->chrono, v->collec_habitations->habitation[i]->feu);
     }
     fprintf(fp,"\n\n");
     ///ON ECRIT LES INFORMATIONS DE LA COLLECTION DE CHATEAUX
@@ -2780,7 +2574,8 @@ void ville_charger(const char* nom_fichier,t_ville* v)
     for(i=0; i<temp; i++)
     {
         collection_habitation_ajouter_habitation(v->collec_habitations,habitation_creer());
-        habitation_charger(v->collec_habitations->habitation[i],fp);
+
+        fscanf(fp,"%d %d %d %f %d",&v->collec_habitations->habitation[i]->case_de_referenceX,&v->collec_habitations->habitation[i]->case_de_referenceY,&v->collec_habitations->habitation[i]->stade,&v->collec_habitations->habitation[i]->chrono,&v->collec_habitations->habitation[i]->feu);
         habitation_placer(v->collec_habitations->habitation[i],v->collec_habitations->habitation[i]->case_de_referenceX,v->collec_habitations->habitation[i]->case_de_referenceY,v->terrain);
     }
 
@@ -2792,7 +2587,19 @@ void ville_charger(const char* nom_fichier,t_ville* v)
         collection_chateau_ajouter_chateau(v->collec_chateaux,chateau_creer());
         v->collec_chateaux->chateau[i]->case_de_referenceX=x;
         v->collec_chateaux->chateau[i]->case_de_referenceY=y;
-        chateau_placer(v->collec_chateaux->chateau[i],x,y,v->terrain);
+        int q,r;
+        v->collec_chateaux->chateau[i]->case_de_referenceX=x;
+        v->collec_chateaux->chateau[i]->case_de_referenceY=y;
+        v->collec_chateaux->chateau[i]->id_chateau.caseX = x;
+        v->collec_chateaux->chateau[i]->id_chateau.caseY = y;
+        for(q=x;q<x+CHATEAU_W;q++)
+        {
+            for(r=y;r<y+CHATEAU_H;r++)
+            {
+                v->terrain[j][q]->type=CHATEAU;
+                v->terrain[j][q]->elem=v->collec_chateaux->chateau[i];
+            }
+        }
     }
 
     ///ON CHARGE LA COLLECTION DE CENTRALES
@@ -2803,7 +2610,20 @@ void ville_charger(const char* nom_fichier,t_ville* v)
         collection_centrale_ajouter_centrale(v->collec_centrales,centrale_creer());
         v->collec_centrales->centrale[i]->case_de_referenceX=x;
         v->collec_centrales->centrale[i]->case_de_referenceY=y;
-        centrale_placer(v->collec_centrales->centrale[i],x,y,v->terrain);
+
+        int o,p;
+        v->collec_centrales->centrale[i]->case_de_referenceX=x;
+        v->collec_centrales->centrale[i]->case_de_referenceY=y;
+        v->collec_centrales->centrale[i]->id_centrale.caseX = x;
+        v->collec_centrales->centrale[i]->id_centrale.caseY = y;
+        for(o=y;o<y+CENTRALE_H;o++)
+        {
+            for(p=x;p<x+CENTRALE_W;p++)
+            {
+                v->terrain[o][p]->type=CENTRALE;
+                v->terrain[o][p]->elem=v->collec_centrales->centrale[i];
+            }
+        }
     }
 
     ///ON CHARGE LA COLLECTION DE CASERNES
@@ -2814,7 +2634,18 @@ void ville_charger(const char* nom_fichier,t_ville* v)
         collection_casernes_ajouter_caserne(v->collec_casernes,caserne_creer());
         v->collec_casernes->caserne[i]->case_de_referenceX=x;
         v->collec_casernes->caserne[i]->case_de_referenceY=y;
-        caserne_placer(v->collec_casernes->caserne[i],x,y,v->terrain);
+
+        int m,n;
+        v->collec_casernes->caserne[i]->case_de_referenceX=x;
+        v->collec_casernes->caserne[i]->case_de_referenceY=y;
+        for(m=x;m<x+CASERNE_W;m++)
+        {
+            for(n=y;n<y+CASERNE_H;n++)
+            {
+                v->terrain[n][m]->type=CASERNE;
+                v->terrain[n][m]->elem=v->collec_casernes->caserne[i];
+            }
+        }
     }
     fclose(fp);
 }
@@ -2960,9 +2791,39 @@ void ville_afficher(t_ville* v, int bouton_boite_a_outils)
                 }
             }
 
-            collection_centrale_afficher(v->collec_centrales,v->niveau_visualisation);
-            collection_chateau_afficher(v->collec_chateaux,v->niveau_visualisation);
-            collection_casernes_afficher(v->collec_casernes,v->niveau_visualisation);
+            for(i=0; i<v->collec_centrales->taille_actuelle; i++)
+            {
+                if(v->niveau_visualisation==NIVEAU_EAU)
+                {
+                    draw_trans_sprite(graphs->buffer_ville,graphs->centrale,1+TAILLE_CASE*v->collec_centrales->centrale[i]->case_de_referenceX,1+TAILLE_CASE*v->collec_centrales->centrale[i]->case_de_referenceY);
+                }
+                else
+                {
+                    draw_sprite(graphs->buffer_ville,graphs->centrale,1+TAILLE_CASE*v->collec_centrales->centrale[i]->case_de_referenceX,1+TAILLE_CASE*v->collec_centrales->centrale[i]->case_de_referenceY);
+                }
+            }
+
+            for(i=0; i<v->collec_chateaux->taille_actuelle; i++)
+            {
+
+                if(v->niveau_visualisation==NIVEAU_ELEC)
+                {
+                    draw_trans_sprite(graphs->buffer_ville,graphs->chateau,1+TAILLE_CASE*v->collec_chateaux->chateau[i]->case_de_referenceX,1+TAILLE_CASE*v->collec_chateaux->chateau[i]->case_de_referenceY);
+                }
+                else
+                {
+                    draw_sprite(graphs->buffer_ville,graphs->chateau,1+TAILLE_CASE*v->collec_chateaux->chateau[i]->case_de_referenceX,1+TAILLE_CASE*v->collec_chateaux->chateau[i]->case_de_referenceY);
+                }
+            }
+
+            for(i=0; i<v->collec_casernes->taille_actuelle; i++)
+            {
+                if(v->niveau_visualisation==NIVEAU_SOL)
+                {
+                    draw_sprite(graphs->buffer_ville,graphs->caserne,1+TAILLE_CASE*v->collec_casernes->caserne[i]->case_de_referenceX,1+TAILLE_CASE*v->collec_casernes->caserne[i]->case_de_referenceY);
+                }
+                draw_trans_sprite(graphs->buffer_ville,graphs->caserne,1+TAILLE_CASE*v->collec_casernes->caserne[i]->case_de_referenceX,1+TAILLE_CASE*v->collec_casernes->caserne[i]->case_de_referenceY);
+            }
 
             // AFFICHAGE DE L'IMAGE TEMPORAIRE QUI SUIT LA SOURIS:
             if(bouton_boite_a_outils == BOUTON_AJOUTER_ROUTE)
@@ -3161,9 +3022,39 @@ void ville_afficher(t_ville* v, int bouton_boite_a_outils)
                 }
             }
 
-            collection_centrale_afficher(v->collec_centrales,v->niveau_visualisation);
-            collection_chateau_afficher(v->collec_chateaux,v->niveau_visualisation);
-            collection_casernes_afficher(v->collec_casernes,v->niveau_visualisation);
+            for(i=0; i<v->collec_centrales->taille_actuelle; i++)
+            {
+                if(v->niveau_visualisation==NIVEAU_EAU)
+                {
+                    draw_trans_sprite(graphs->buffer_ville,graphs->centrale,1+TAILLE_CASE*v->collec_centrales->centrale[i]->case_de_referenceX,1+TAILLE_CASE*v->collec_centrales->centrale[i]->case_de_referenceY);
+                }
+                else
+                {
+                    draw_sprite(graphs->buffer_ville,graphs->centrale,1+TAILLE_CASE*v->collec_centrales->centrale[i]->case_de_referenceX,1+TAILLE_CASE*v->collec_centrales->centrale[i]->case_de_referenceY);
+                }
+            }
+
+            for(i=0; i<v->collec_chateaux->taille_actuelle; i++)
+            {
+
+                if(v->niveau_visualisation==NIVEAU_ELEC)
+                {
+                    draw_trans_sprite(graphs->buffer_ville,graphs->chateau,1+TAILLE_CASE*v->collec_chateaux->chateau[i]->case_de_referenceX,1+TAILLE_CASE*v->collec_chateaux->chateau[i]->case_de_referenceY);
+                }
+                else
+                {
+                    draw_sprite(graphs->buffer_ville,graphs->chateau,1+TAILLE_CASE*v->collec_chateaux->chateau[i]->case_de_referenceX,1+TAILLE_CASE*v->collec_chateaux->chateau[i]->case_de_referenceY);
+                }
+            }
+
+            for(i=0; i<v->collec_casernes->taille_actuelle; i++)
+            {
+                if(v->niveau_visualisation==NIVEAU_SOL)
+                {
+                    draw_sprite(graphs->buffer_ville,graphs->caserne,1+TAILLE_CASE*v->collec_casernes->caserne[i]->case_de_referenceX,1+TAILLE_CASE*v->collec_casernes->caserne[i]->case_de_referenceY);
+                }
+                draw_trans_sprite(graphs->buffer_ville,graphs->caserne,1+TAILLE_CASE*v->collec_casernes->caserne[i]->case_de_referenceX,1+TAILLE_CASE*v->collec_casernes->caserne[i]->case_de_referenceY);
+            }
 
             for(compteur=0; compteur<v->collec_chateaux->taille_actuelle; compteur++)
             {
@@ -3319,9 +3210,39 @@ void ville_afficher(t_ville* v, int bouton_boite_a_outils)
                                 1 + TAILLE_CASE * v->collec_habitations->habitation[i]->case_de_referenceY);
                 }
             }
-            collection_centrale_afficher(v->collec_centrales,v->niveau_visualisation);
-            collection_chateau_afficher(v->collec_chateaux,v->niveau_visualisation);
-            collection_casernes_afficher(v->collec_casernes,v->niveau_visualisation);
+            for(i=0; i<v->collec_centrales->taille_actuelle; i++)
+            {
+                if(v->niveau_visualisation==NIVEAU_EAU)
+                {
+                    draw_trans_sprite(graphs->buffer_ville,graphs->centrale,1+TAILLE_CASE*v->collec_centrales->centrale[i]->case_de_referenceX,1+TAILLE_CASE*v->collec_centrales->centrale[i]->case_de_referenceY);
+                }
+                else
+                {
+                    draw_sprite(graphs->buffer_ville,graphs->centrale,1+TAILLE_CASE*v->collec_centrales->centrale[i]->case_de_referenceX,1+TAILLE_CASE*v->collec_centrales->centrale[i]->case_de_referenceY);
+                }
+            }
+
+            for(i=0; i<v->collec_chateaux->taille_actuelle; i++)
+            {
+
+                if(v->niveau_visualisation==NIVEAU_ELEC)
+                {
+                    draw_trans_sprite(graphs->buffer_ville,graphs->chateau,1+TAILLE_CASE*v->collec_chateaux->chateau[i]->case_de_referenceX,1+TAILLE_CASE*v->collec_chateaux->chateau[i]->case_de_referenceY);
+                }
+                else
+                {
+                    draw_sprite(graphs->buffer_ville,graphs->chateau,1+TAILLE_CASE*v->collec_chateaux->chateau[i]->case_de_referenceX,1+TAILLE_CASE*v->collec_chateaux->chateau[i]->case_de_referenceY);
+                }
+            }
+
+            for(i=0; i<v->collec_casernes->taille_actuelle; i++)
+            {
+                if(v->niveau_visualisation==NIVEAU_SOL)
+                {
+                    draw_sprite(graphs->buffer_ville,graphs->caserne,1+TAILLE_CASE*v->collec_casernes->caserne[i]->case_de_referenceX,1+TAILLE_CASE*v->collec_casernes->caserne[i]->case_de_referenceY);
+                }
+                draw_trans_sprite(graphs->buffer_ville,graphs->caserne,1+TAILLE_CASE*v->collec_casernes->caserne[i]->case_de_referenceX,1+TAILLE_CASE*v->collec_casernes->caserne[i]->case_de_referenceY);
+            }
 
             for(compteur=0; compteur<v->collec_centrales->taille_actuelle; compteur++)
             {
@@ -3358,6 +3279,7 @@ void ville_gerer(t_ville* v, int bouton_boite_a_outil)
     int* capacite_centrale;
     int* capacite_chateaux;
     int i;
+    int j;
 
     if(v->pause == PAUSE_DESACTIVEE)
     {
@@ -3370,13 +3292,26 @@ void ville_gerer(t_ville* v, int bouton_boite_a_outil)
             if(v->pause == PAUSE_DESACTIVEE)
             {
                 date_actualiser(v->temps_de_jeu);
-                collection_habitation_actualiser_timer(v->collec_habitations);
+
+
+                for(j=0;j<v->collec_habitations->taille_actuelle;j++)
+                {
+                    v->collec_habitations->habitation[j]->chrono = v->collec_habitations->habitation[j]->chrono + PAS_DU_TIMER;
+                }
             }
         }
 
         collection_habitation_debut_tour(v->collec_habitations,&(v->nb_habitants));
-        collection_centrale_debut_tour(v->collec_centrales);
-        collection_chateau_debut_tour(v->collec_chateaux);
+
+        for(i=0; i<v->collec_centrales->taille_actuelle; i++)
+        {
+            v->collec_centrales->centrale[i]->capacite.capacite_disponible = CAPACITE_CENTRALE;
+        }
+
+        for(i=0; i<v->collec_chateaux->taille_actuelle; i++)
+        {
+            v->collec_chateaux->chateau[i]->capacite.capacite_disponible=CAPACITE_CHATEAU;
+        }
 
         ///Calcul des longueurs entre les habitations et les différents batiments
         longueurs_chateaux=collection_chateau_tableau_longueurs(v->collec_chateaux,v->terrain,&(v->data_bfs),v->collec_habitations);
@@ -3474,7 +3409,19 @@ void ville_gerer(t_ville* v, int bouton_boite_a_outil)
             if(chateau_place_libre(col,lig,v->terrain))
             {
                 chateau=chateau_creer();
-                chateau_placer(chateau,col,lig,v->terrain);
+                int i,j;
+                chateau->case_de_referenceX=col;
+                chateau->case_de_referenceY=lig;
+                chateau->id_chateau.caseX = col;
+                chateau->id_chateau.caseY = lig;
+                for(i=col;i<col+CHATEAU_W;i++)
+                {
+                    for(j=lig;j<lig+CHATEAU_H;j++)
+                    {
+                        v->terrain[j][i]->type=CHATEAU;
+                        v->terrain[j][i]->elem=chateau;
+                    }
+                }
                 collection_chateau_ajouter_chateau(v->collec_chateaux,chateau);
                 v->argent -= COUT_CHATEAU;
             }
@@ -3487,7 +3434,19 @@ void ville_gerer(t_ville* v, int bouton_boite_a_outil)
             if(centrale_place_libre(col,lig,v->terrain))
             {
                 centrale=centrale_creer();
-                centrale_placer(centrale,col,lig,v->terrain);
+                int o,p;
+                centrale->case_de_referenceX=col;
+                centrale->case_de_referenceY=lig;
+                centrale->id_centrale.caseX = col;
+                centrale->id_centrale.caseY = lig;
+                for(o=lig;o<lig+CENTRALE_H;o++)
+                {
+                    for(p=col;p<col+CENTRALE_W;p++)
+                    {
+                        v->terrain[o][p]->type=CENTRALE;
+                        v->terrain[o][p]->elem=centrale;
+                    }
+                }
                 collection_centrale_ajouter_centrale(v->collec_centrales,centrale);
                 v->argent -= COUT_CENTRALE;
             }
@@ -3500,7 +3459,18 @@ void ville_gerer(t_ville* v, int bouton_boite_a_outil)
             if(caserne_place_libre(col,lig,v->terrain))
             {
                 caserne=caserne_creer();
-                caserne_placer(caserne,col,lig,v->terrain);
+
+                int i,j;
+                caserne->case_de_referenceX=col;
+                caserne->case_de_referenceY=lig;
+                for(i=col;i<col+CASERNE_W;i++)
+                {
+                    for(j=lig;j<lig+CASERNE_H;j++)
+                    {
+                        v->terrain[j][i]->type=CASERNE;
+                        v->terrain[j][i]->elem=caserne;
+                    }
+                }
                 collection_casernes_ajouter_caserne(v->collec_casernes,caserne);
                 v->argent -= COUT_CENTRALE;
             }
