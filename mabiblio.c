@@ -2,7 +2,6 @@
 // Created by denis on 02/11/2022.
 //
 
-
 #include "mabiblio.h"
 
 /////////////////bfs.c////////////////////////
@@ -166,6 +165,7 @@ t_infos * infos_creer()
     nouv->isCatch=0;
     return nouv;
 }
+
 void info_afficher(t_editeur* ed)
 {
     int x,y;
@@ -510,7 +510,64 @@ int chateau_distribuer(t_chateau* chateau,t_habitation* habitation)
     {
         eau_distribuee+=habitation->chateaux_fournisseurs[i].qte_eau_distribuee;
     }
-    quantitee=habitation_nbhabitants(habitation)-eau_distribuee;
+
+    //desert
+
+    if (habitation->case_de_referenceX >= 0 && habitation->case_de_referenceX <= 325 && habitation->case_de_referenceY >= 585 && habitation->case_de_referenceX <=725)
+    {
+        quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+    }
+
+    if (habitation->case_de_referenceX >= 0 && habitation->case_de_referenceX <= 125 && habitation->case_de_referenceY >= 25 && habitation->case_de_referenceY <=725)
+    {
+        quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+    }
+
+    if (habitation->case_de_referenceX >= 0 && habitation->case_de_referenceX <= 205 && habitation->case_de_referenceY >= 85 && habitation->case_de_referenceY <=725)
+    {
+        quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+    }
+
+    if (habitation->case_de_referenceX >= 0 && habitation->case_de_referenceX <= 245 && habitation->case_de_referenceY >= 285 && habitation->case_de_referenceY <=725)
+    {
+        quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+    }
+
+//glace
+
+    if (habitation->case_de_referenceX >= 607 && habitation->case_de_referenceX <= 905 && habitation->case_de_referenceY >= 25 && habitation->case_de_referenceY <=165)
+    {
+        quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+    }
+
+    if (habitation->case_de_referenceX >= 806 && habitation->case_de_referenceX <= 905 && habitation->case_de_referenceY >= 25 && habitation->case_de_referenceY <=345)
+    {
+        quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+    }
+
+    if (habitation->case_de_referenceX >= 665 && habitation->case_de_referenceX <= 905 && habitation->case_de_referenceY >= 25 && habitation->case_de_referenceY <=205)
+    {
+        quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+    }
+
+    if (habitation->case_de_referenceX >= 865 && habitation->case_de_referenceX <= 905 && habitation->case_de_referenceY >= 25 && habitation->case_de_referenceY <=385)
+    {
+        quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+    }
+
+    if (habitation->case_de_referenceX >= 765 && habitation->case_de_referenceX <= 905 && habitation->case_de_referenceY >= 245 && habitation->case_de_referenceY <=285)
+    {
+        quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+        //rectfill(page,765,245,905,285,COUL_FOND)
+    }
+
+    else
+    {
+        quantitee=habitation_nbhabitants(habitation)-eau_distribuee;
+        printf("%d,%d\n",habitation->case_de_referenceX,habitation->case_de_referenceY);
+    }
+
+
     if(chateau->capacite.capacite_disponible>=quantitee)
     {
         //////////////////////////////////////////////////////////////// on cherche l'indice du 1er chateau fournisseur
@@ -1158,14 +1215,19 @@ void editeur_gerer(t_editeur* ed)
 
 }
 
-int editeur_afficher(t_editeur* ed)
+int editeur_afficher(t_editeur* ed, int* quitquestion)
 {
-    int quit;
+    int quit ;
+    int x,y;
     // on vide le buffer page
     clear_bitmap(page);
 
     rectfill(page, 0, 0, TAILLE_FENETRE_W, TAILLE_FENETRE_H, COUL_FOND1);
     rectfill(page, 0, 0, 1024, 20, COUL_FOND);
+
+    // on construit notre affichage sur le buffer page
+    ville_afficher(ed->maville,ed->boite_a_outils->bouton_choisi);
+
     rectfill(page, 10/2, 10/2, 20/2, 20/2, makecol(255,0,0));
     rectfill(page, 20/2, 10/2, 30/2, 20/2, makecol(0,255,0));
     rectfill(page, 10/2, 20/2, 20/2, 30/2, makecol(0,0,255));
@@ -1176,9 +1238,44 @@ int editeur_afficher(t_editeur* ed)
     {
         rectfill(page, 950, 0, 1024, 20, makecol(255,0,0));
         textprintf_ex(page,font,960,7,makecol(0,0,0),-1,"Quitter");
-        if (mouse_b&1) {
+
+    }
+    if (mouse_b&1 && mouse_x >= 950 && mouse_x <= 1024 && mouse_y <= 20 && mouse_y >=0) {
+        ed->boite_a_outils->bouton_choisi = -1; // Si clic-droit alors on réinitialise le bouton choisi
+        *quitquestion = 1;
+    }
+
+    if (*quitquestion !=0)
+    {
+        rectfill(page, 325, 265, 600, 365, COUL_FOND);
+        rect(page, 324, 264, 601, 366, COUL_BORD);
+
+        textprintf_ex(page,font,350,290,makecol(0,0,0),-1,"Voulez vous vraiment quitter ?");
+        if (mouse_x >= 390 && mouse_x <= 430 && mouse_y <= 355 && mouse_y >=320)
+        {
+            rectfill(page, 390, 320, 430, 335, makecol(255,0,0));
+        }
+        rect(page, 390, 320, 430, 335, COUL_BORD);
+        textprintf_ex(page,font,400,325,makecol(0,0,0),-1,"OUI");
+
+        if (mouse_x >= 490 && mouse_x <= 530 && mouse_y <= 355 && mouse_y >=320)
+        {
+            rectfill(page, 490, 320, 530, 335, makecol(255,0,0));
+        }
+        rect(page, 490, 320, 530, 335, COUL_BORD);
+        textprintf_ex(page,font,500,325,makecol(0,0,0),-1,"NON");
+
+        if (mouse_b&1 && mouse_x >= 390 && mouse_x <= 430 && mouse_y <= 355 && mouse_y >=320) {
             ed->boite_a_outils->bouton_choisi = -1; // Si clic-droit alors on réinitialise le bouton choisi
+            *quitquestion = 0;
             quit = 1;
+            //printf("%d", quit);
+
+        }
+        if (mouse_b&1 && mouse_x >= 490 && mouse_x <= 530 && mouse_y <= 355 && mouse_y >=320) {
+            ed->boite_a_outils->bouton_choisi = -1; // Si clic-droit alors on réinitialise le bouton choisi
+            *quitquestion = 0;
+
             //printf("%d", quit);
 
         }
@@ -1188,8 +1285,55 @@ int editeur_afficher(t_editeur* ed)
     rect(page, 951, 1, 1023, 19, COUL_BORD);
     rect(page, 952, 2, 1022, 18, COUL_BORD);
 
-    // on construit notre affichage sur le buffer page
-    ville_afficher(ed->maville,ed->boite_a_outils->bouton_choisi);
+   /* //desert
+
+    if (mouse_x >= 0 && mouse_x <= 325 && mouse_y >= 585 && mouse_y <=725)
+    {
+        rectfill(page, 0, 586, 326, 724, COUL_BORD);
+    }
+
+    if (mouse_x >= 0 && mouse_x <= 125 && mouse_y >= 25 && mouse_y <=725)
+    {
+        rectfill(page, 0, 26, 126, 724, COUL_BORD);
+    }
+
+    if (mouse_x >= 0 && mouse_x <= 205 && mouse_y >= 85 && mouse_y <=725)
+    {
+        rectfill(page, 0, 86, 206, 724, COUL_BORD);
+    }
+
+    if (mouse_x >= 0 && mouse_x <= 245 && mouse_y >= 285 && mouse_y <=725)
+    {
+        rectfill(page, 0, 286, 246, 724, COUL_BORD);
+    }
+
+//glace
+
+    if (mouse_x >= 607 && mouse_x <= 905 && mouse_y >= 25 && mouse_y <=165)
+    {
+        rectfill(page, 607, 25, 905, 165, COUL_BORD);
+    }
+
+    if (mouse_x >= 806 && mouse_x <= 905 && mouse_y >= 25 && mouse_y <=345)
+    {
+        rectfill(page, 806, 25, 905, 346, COUL_BORD);
+    }
+
+    if (mouse_x >= 665 && mouse_x <= 905 && mouse_y >= 25 && mouse_y <=205)
+    {
+        rectfill(page, 665, 25, 905, 205, COUL_BORD);
+    }
+
+    if (mouse_x >= 865 && mouse_x <= 905 && mouse_y >= 25 && mouse_y <=385)
+    {
+        rectfill(page, 865, 25, 905, 385, COUL_BORD);
+    }
+
+    if (mouse_x >= 765 && mouse_x <= 905 && mouse_y >= 245 && mouse_y <=285)
+    {
+        rectfill(page, 765, 245, 905, 285, COUL_BORD);
+    }*/
+
 
     boiteaoutils_afficher(ed->boite_a_outils);
 
@@ -1206,6 +1350,8 @@ int editeur_afficher(t_editeur* ed)
     textprintf_ex(page,font,500,40,makecol(255,255,255),-1,"Eau dispo:%d/%d",ed->maville->qte_eau.capacite_disponible,ed->maville->qte_eau.capacite_max);
     if(ed->maville->pause == PAUSE_ACTIVEE) textprintf_ex(page,font,700,40,makecol(255,255,255),-1,"PAUSE ACTIVEE");
 */
+    textprintf_ex(page,font,915,640,makecol(255,255,255),-1,"x:%d , y:%d",mouse_x,mouse_y);
+
     rectfill(page, 910, 650, 1024, 768, COUL_FOND);
     textprintf_ex(page,font,915,660,makecol(255,255,255),-1,"Temps de jeu:");
     textprintf_ex(page,font,920,680,makecol(255,255,255),-1,"%d:%d:%.0f",ed->maville->temps_de_jeu->heures,ed->maville->temps_de_jeu->minutes,ed->maville->temps_de_jeu->secondes);
@@ -1374,98 +1520,6 @@ void supprimer_contenu_chaine_apres_point(char* chemin)
             break;
         }
     }
-}
-
-int obtenir_chemin_chargement(char* chemin)
-{
-    int res;
-
-    TCHAR Buffer[MAX_PATH];
-    GetCurrentDirectory(MAX_PATH, Buffer);
-
-    OPENFILENAME ofn;
-    TCHAR tmp[TAILLE_BUFFER] ;
-    tmp[0]= '\0' ;
-    ZeroMemory ( &ofn , sizeof ( OPENFILENAMEW ) );
-    ofn.lStructSize = sizeof ( OPENFILENAMEW );
-    ofn.lpstrFile = tmp;
-    ofn.nMaxFile = TAILLE_BUFFER;
-    ofn.lpstrTitle = _T("Le titre");
-    ofn.lpstrFilter = _T("Tous (*.*)\0*.*\0Textes (*.txt)\0*.TXT\0");
-    ofn.lpstrInitialDir = _T(Buffer);
-    ofn.Flags = OFN_LONGNAMES | OFN_EXPLORER;
-    res = GetOpenFileName(&ofn);
-    if (res==1)
-    {
-        // si choix du fichier réussi
-        strncpy(chemin,ofn.lpstrFile,TAILLE_CHAINE);
-    }
-    else printf("Choix du fichier annule\n");
-
-    return res;
-}
-
-int verif_type_fichier(const char* chemin)
-{
-    int ok;
-    char* ext;
-
-    ext = return_extension_blindee(chemin);
-    if (strncmp(ext,"txt",3) == 0)
-    {
-        ok=1;
-        printf("Extension OK\n");
-    }
-    else
-    {
-        ok=0;
-        printf("Fichier non accepte (extension non reconnue)\n");
-    }
-
-    free(ext);
-
-    return ok;
-}
-
-char* return_extension_blindee(const char* chemin)
-{
-    int i=0;
-    int j=0;
-    char* ext = NULL;
-    ext= (char*) malloc(50*sizeof(char));
-    while(chemin[i]!= '.' && chemin[i]!='\0')
-    {
-        i++;
-    }
-    i++;
-    while(chemin[i]!='\0')
-    {
-        ext[j]=chemin[i];
-        i++;
-        j++;
-    }
-    ext[j]='\0';
-
-    return ext;
-}
-
-int remplit_chemin_chargement(char* chemin)
-{
-    int choix_fini;
-    int type_fichier_ok;
-
-    choix_fini = obtenir_chemin_chargement(chemin);
-    if(choix_fini)
-    {
-        type_fichier_ok = verif_type_fichier(chemin);
-    }
-    if(choix_fini && type_fichier_ok)
-    {
-        // on est certain qu'un fichier a bien été choisi, et qu'il est bien de type txt
-        printf("Chemin: %s\n",chemin);
-        return 1;
-    }
-    else return 0;
 }
 
 int remplit_chemin_sauvegarde(char* chemin)
@@ -1824,7 +1878,63 @@ void habitation_evolution_communiste(t_habitation* habitation,int nb_chateaux,in
             case STADE_GRATTECIEL : quantitee_future = NB_HABITANTS_GRATTECIEL;
                 break;
         }
-        quantitee_future-=habitation_nbhabitants(habitation);
+
+        //desert
+
+        if (habitation->case_de_referenceX >= 0 && habitation->case_de_referenceX <= 325 && habitation->case_de_referenceY >= 585 && habitation->case_de_referenceX <=725)
+        {
+            quantitee_future+=habitation_nbhabitants(habitation);
+        }
+
+        if (habitation->case_de_referenceX >= 0 && habitation->case_de_referenceX <= 125 && habitation->case_de_referenceY >= 25 && habitation->case_de_referenceY <=725)
+        {
+            quantitee_future+=habitation_nbhabitants(habitation);
+        }
+
+        if (habitation->case_de_referenceX >= 0 && habitation->case_de_referenceX <= 205 && habitation->case_de_referenceY >= 85 && habitation->case_de_referenceY <=725)
+        {
+            quantitee_future+=habitation_nbhabitants(habitation);
+        }
+
+        if (habitation->case_de_referenceX >= 0 && habitation->case_de_referenceX <= 245 && habitation->case_de_referenceY >= 285 && habitation->case_de_referenceY <=725)
+        {
+            quantitee_future+=habitation_nbhabitants(habitation);
+        }
+
+//glace
+
+        if (habitation->case_de_referenceX >= 607 && habitation->case_de_referenceX <= 905 && habitation->case_de_referenceY >= 25 && habitation->case_de_referenceY <=165)
+        {
+            quantitee_future+=habitation_nbhabitants(habitation);
+        }
+
+        if (habitation->case_de_referenceX >= 806 && habitation->case_de_referenceX <= 905 && habitation->case_de_referenceY >= 25 && habitation->case_de_referenceY <=345)
+        {
+            quantitee_future+=habitation_nbhabitants(habitation);
+        }
+
+        if (habitation->case_de_referenceX >= 665 && habitation->case_de_referenceX <= 905 && habitation->case_de_referenceY >= 25 && habitation->case_de_referenceY <=205)
+        {
+            quantitee_future+=habitation_nbhabitants(habitation);
+        }
+
+        if (habitation->case_de_referenceX >= 865 && habitation->case_de_referenceX <= 905 && habitation->case_de_referenceY >= 25 && habitation->case_de_referenceY <=385)
+        {
+            quantitee_future+=habitation_nbhabitants(habitation);
+        }
+
+        if (habitation->case_de_referenceX >= 765 && habitation->case_de_referenceX <= 905 && habitation->case_de_referenceY >= 245 && habitation->case_de_referenceY <=285)
+        {
+            quantitee_future+=habitation_nbhabitants(habitation);
+        }
+
+        else
+        {
+            quantitee_future-=habitation_nbhabitants(habitation);
+        }
+
+
+
         if((eau_dispo>=quantitee_future)&&(elec_dispo>=quantitee_future)) ///SI LA QUANTITEE DISPONIBLE EST SUPERIEURE A LA
         {                                                               ///QUANTITEE FUTURE, ON AUGMENTE LE BATIMENT
             habitation_progression(habitation);
@@ -2012,7 +2122,6 @@ void sous_menu_charger(t_graphsousMenu* g)
     fclose(fpy);
 }
 
-
 void menu_charger(t_graphMenu* graph)
 {
     int i;
@@ -2120,11 +2229,10 @@ void menu_afficher(t_graphMenu graph)
             {
                 //NOUVEAU
                 printf("charger\n");
-                if(remplit_chemin_chargement(nom_fichier))
-                {
+
                     show_mouse(screen);
-                    menu_boucle_jeu(CHARGER,nom_fichier,graph);
-                }
+
+
             }
             if (mx>=graph.boutons_x[MENU_BOUTON_CREDITS] && mx<=(graph.boutons_x[MENU_BOUTON_CREDITS]+graph.img_boutons_off[MENU_BOUTON_CREDITS]->w) && my>=graph.boutons_y[MENU_BOUTON_CREDITS] && my<=(graph.boutons_y[MENU_BOUTON_CREDITS]+graph.img_boutons_off[MENU_BOUTON_CREDITS]->h))
             {
@@ -2242,6 +2350,9 @@ void menu_boucle_jeu(int mode_choisi,const char* nom_fichier,t_graphMenu graph)
 {
     t_editeur* ed = NULL;
     int quitte=0,son=0;
+    int quitquestion=0;
+
+
 
     switch(mode_choisi)
     {
@@ -2250,10 +2361,6 @@ void menu_boucle_jeu(int mode_choisi,const char* nom_fichier,t_graphMenu graph)
             break;
         case MODE_COMMUNISTE:
             ed = editeur_allouer(MODE_COMMUNISTE);
-            break;
-        case CHARGER:
-            ed = editeur_allouer(MODE_CAPITALISTE); // osef on va le changer en chargeant la ville
-            ville_charger(nom_fichier,ed->maville);
             break;
     }
 
@@ -2273,7 +2380,7 @@ void menu_boucle_jeu(int mode_choisi,const char* nom_fichier,t_graphMenu graph)
 
         rafraichir_clavier_souris();
         editeur_gerer(ed);
-        quitte=editeur_afficher(ed);
+        quitte=editeur_afficher(ed, &quitquestion);
         rest(0.1);
     }
 
@@ -2535,117 +2642,6 @@ void ville_sauvegarder(const char* nom_fichier,t_ville* v)
     for(i=0; i<v->collec_casernes->taille_actuelle; i++)
     {
         fprintf(fp,"%d %d\n",v->collec_casernes->caserne[i]->case_de_referenceX,v->collec_casernes->caserne[i]->case_de_referenceY);
-    }
-    fclose(fp);
-}
-
-// sera appelé comme ceci: ville_charger("test.txt",ed->maville);
-void ville_charger(const char* nom_fichier,t_ville* v)
-{
-    FILE* fp;
-    int temp,i,j,x,y;
-
-    fp=fopen(nom_fichier,"r");
-    if(fp==NULL)
-    {
-        printf("ERREUR FICHIER DE SAUVEGARDE");
-        exit(1);
-    }
-
-    fscanf(fp,"%d",&v->mode);
-    fscanf(fp,"%d",&v->argent);
-    fscanf(fp,"%d %d %lf",&v->temps_de_jeu->heures,&v->temps_de_jeu->minutes,&v->temps_de_jeu->secondes);
-    printf("h:%d,m:%d,s:%lf\n",v->temps_de_jeu->heures,v->temps_de_jeu->minutes,v->temps_de_jeu->secondes);
-    ///ON CHARGE LES ROUTES ET ON LES PLACES
-    for(i=0; i<NB_CASES_LIG; i++)
-    {
-        for(j=0; j<NB_CASES_COL; j++)
-        {
-            fscanf(fp,"%d",&temp);
-            if(temp==1)
-            {
-                route_placer(route_creer(),j,i,v->terrain);
-            }
-        }
-    }
-
-    ///ON CHARGE LA COLLECTION D'HABITATION
-    fscanf(fp,"%d",&temp);
-    for(i=0; i<temp; i++)
-    {
-        collection_habitation_ajouter_habitation(v->collec_habitations,habitation_creer());
-
-        fscanf(fp,"%d %d %d %f %d",&v->collec_habitations->habitation[i]->case_de_referenceX,&v->collec_habitations->habitation[i]->case_de_referenceY,&v->collec_habitations->habitation[i]->stade,&v->collec_habitations->habitation[i]->chrono,&v->collec_habitations->habitation[i]->feu);
-        habitation_placer(v->collec_habitations->habitation[i],v->collec_habitations->habitation[i]->case_de_referenceX,v->collec_habitations->habitation[i]->case_de_referenceY,v->terrain);
-    }
-
-    ///ON CHARGE LA COLLECTION DE CHATEAUX
-    fscanf(fp,"%d",&temp);
-    for(i=0; i<temp; i++)
-    {
-        fscanf(fp,"%d %d",&x,&y);
-        collection_chateau_ajouter_chateau(v->collec_chateaux,chateau_creer());
-        v->collec_chateaux->chateau[i]->case_de_referenceX=x;
-        v->collec_chateaux->chateau[i]->case_de_referenceY=y;
-        int q,r;
-        v->collec_chateaux->chateau[i]->case_de_referenceX=x;
-        v->collec_chateaux->chateau[i]->case_de_referenceY=y;
-        v->collec_chateaux->chateau[i]->id_chateau.caseX = x;
-        v->collec_chateaux->chateau[i]->id_chateau.caseY = y;
-        for(q=x;q<x+CHATEAU_W;q++)
-        {
-            for(r=y;r<y+CHATEAU_H;r++)
-            {
-                v->terrain[j][q]->type=CHATEAU;
-                v->terrain[j][q]->elem=v->collec_chateaux->chateau[i];
-            }
-        }
-    }
-
-    ///ON CHARGE LA COLLECTION DE CENTRALES
-    fscanf(fp,"%d",&temp);
-    for(i=0; i<temp; i++)
-    {
-        fscanf(fp,"%d %d",&x,&y);
-        collection_centrale_ajouter_centrale(v->collec_centrales,centrale_creer());
-        v->collec_centrales->centrale[i]->case_de_referenceX=x;
-        v->collec_centrales->centrale[i]->case_de_referenceY=y;
-
-        int o,p;
-        v->collec_centrales->centrale[i]->case_de_referenceX=x;
-        v->collec_centrales->centrale[i]->case_de_referenceY=y;
-        v->collec_centrales->centrale[i]->id_centrale.caseX = x;
-        v->collec_centrales->centrale[i]->id_centrale.caseY = y;
-        for(o=y;o<y+CENTRALE_H;o++)
-        {
-            for(p=x;p<x+CENTRALE_W;p++)
-            {
-                v->terrain[o][p]->type=CENTRALE;
-                v->terrain[o][p]->elem=v->collec_centrales->centrale[i];
-            }
-        }
-    }
-
-    ///ON CHARGE LA COLLECTION DE CASERNES
-    fscanf(fp,"%d",&temp);
-    for(i=0; i<temp; i++)
-    {
-        fscanf(fp,"%d %d",&x,&y);
-        collection_casernes_ajouter_caserne(v->collec_casernes,caserne_creer());
-        v->collec_casernes->caserne[i]->case_de_referenceX=x;
-        v->collec_casernes->caserne[i]->case_de_referenceY=y;
-
-        int m,n;
-        v->collec_casernes->caserne[i]->case_de_referenceX=x;
-        v->collec_casernes->caserne[i]->case_de_referenceY=y;
-        for(m=x;m<x+CASERNE_W;m++)
-        {
-            for(n=y;n<y+CASERNE_H;n++)
-            {
-                v->terrain[n][m]->type=CASERNE;
-                v->terrain[n][m]->elem=v->collec_casernes->caserne[i];
-            }
-        }
     }
     fclose(fp);
 }
@@ -3501,4 +3497,3 @@ void ville_gerer(t_ville* v, int bouton_boite_a_outil)
         v->niveau_visualisation = NIVEAU_ELEC;
     }
 }
-

@@ -880,7 +880,7 @@ t_editeur* editeur_allouer(int mode_de_jeu);
 
 void editeur_gerer(t_editeur* ed);
 
-int editeur_afficher(t_editeur* ed);
+int editeur_afficher(t_editeur* ed,int* quitquestion);
 
 void editeur_liberer(t_editeur* ed);
 
