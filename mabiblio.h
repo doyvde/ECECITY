@@ -968,43 +968,27 @@ typedef struct graphMenu // on déclarera une instance de t_graphMenu dans le ma
     BITMAP* cursor;
     BITMAP* fond;
     BITMAP* contenu_credits;
-
     BITMAP* img_boutons_on[NB_BOUTONS];
     BITMAP* img_boutons_off[NB_BOUTONS];
-
     SAMPLE* music;
-
     t_graphsousMenu graphsdusousmenu;
-
     int boutons_x[NB_BOUTONS];
     int boutons_y[NB_BOUTONS];
 
 }t_graphMenu;
 
-// libère les bitmaps du menu, à la fin du programme.
-void menu_liberer(t_graphMenu* graph);
-
-// charge les informations du menu
-void menu_charger(t_graphMenu* graph);
-
-// affiche le menu
-void menu_afficher(t_graphMenu graph);
-
-// affichage du sous-menu a propos
-void menu_afficher_credits(t_graphMenu graph);
-
-void menu_boucle_jeu(int mode_choisi,const char* nom_fichier,t_graphMenu graph);
-
-int menu_selection_mode(t_graphMenu graph);
+void menu_boucle_jeu(int mode_choisi,const char* nom_fichier,t_graphMenu graph);//menu et boucle de jeu
+//// MENU ////
+void menu(BITMAP* menu1, t_graphMenu* graph);//menu principal
+void menuBisFR(BITMAP* menu1, BITMAP* menufr, t_graphMenu* graph);//second menu version française
+void menuReglesFR(BITMAP* menufr, BITMAP* menuReglesfr, BITMAP* menu1, t_graphMenu* graph);//menu des règles version française
+int menuModeFR(BITMAP* menufr, BITMAP* menuModefr, t_graphMenu* graph);//menu choix du mode version française
 
 void sous_menu_liberer(t_graphsousMenu* g);
-
 void sous_menu_charger(t_graphsousMenu* g);
-
 /////////////////route.h////////////////////////
 typedef struct route
 {
-
     int case_de_referenceX;
     int case_de_referenceY;
     int type;
