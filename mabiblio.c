@@ -2060,301 +2060,125 @@ void* liste_recup_tete(t_liste* lst)
 }
 
 /////////////////menu.c////////////////////////
-void menu_liberer(t_graphMenu* graph)
+void menu(BITMAP* menu1, t_graphMenu* graph)
 {
-    int i;
-    destroy_bitmap(graph->fond);
-    destroy_bitmap(graph->cursor);
-    destroy_bitmap(graph->contenu_credits);
-
-    for(i=0; i<NB_BOUTONS; i++)
-    {
-        destroy_bitmap(graph->img_boutons_off[i]);
-        destroy_bitmap(graph->img_boutons_on[i]);
-    }
-
-    destroy_sample(graph->music);
-
-    sous_menu_liberer(&graph->graphsdusousmenu);
-}
-
-void sous_menu_liberer(t_graphsousMenu* g)
-{
-    int i;
-    destroy_bitmap(g->fond);
-    for(i=0;i<NB_BOUTONS_SOUS_MENU;i++)
-    {
-        destroy_bitmap(g->img_boutons_off[i]);
-        destroy_bitmap(g->img_boutons_on[i]);
-    }
-
-}
-
-void sous_menu_charger(t_graphsousMenu* g)
-{
-    int i;
-    char tmp[TAILLE_CHAINE];
-    FILE *fpx,*fpy;
-    fpx=fopen("fichiers/sous_menu_boutons_x.txt","r");
-    fpy=fopen("fichiers/sous_menu_boutons_y.txt","r");
-    if ((fpx == NULL)|| (fpy==NULL))
-    {
-        allegro_message("prb ouverture fichiers boutons");
-        allegro_exit();
-        exit(EXIT_FAILURE);
-    }
-
-    g->fond = chargerImage("fichiers/images/menu/sousmenu/fond.bmp");
-
-    g->img_boutons_off[SOUS_MENU_COMMUNISTE] = chargerImage("fichiers/images/menu/sousmenu/communiste0.bmp");
-    g->img_boutons_on[SOUS_MENU_COMMUNISTE]  = chargerImage("fichiers/images/menu/sousmenu/communiste1.bmp");
-    g->img_boutons_off[SOUS_MENU_CAPITALISTE] = chargerImage("fichiers/images/menu/sousmenu/capitaliste0.bmp");
-    g->img_boutons_on[SOUS_MENU_CAPITALISTE]  = chargerImage("fichiers/images/menu/sousmenu/capitaliste1.bmp");
-
-
-
-    for(i=0; i<NB_BOUTONS_SOUS_MENU; i++)
-    {
-        fscanf(fpx,"%d",&g->boutons_x[i]);
-        fscanf(fpy,"%d",&g->boutons_y[i]);
-    }
-    fclose(fpx);
-    fclose(fpy);
-}
-
-void menu_charger(t_graphMenu* graph)
-{
-    int i;
-    FILE *fpx,*fpy;
-    fpx=fopen("fichiers/boutons_x.txt","r");
-    fpy=fopen("fichiers/boutons_y.txt","r");
-    if ((fpx == NULL)|| (fpy==NULL))
-    {
-        allegro_message("prb ouverture fichiers boutons");
-        allegro_exit();
-        exit(EXIT_FAILURE);
-    }
-
-    sous_menu_charger(&graph->graphsdusousmenu);
-
-    graph->fond=chargerImage("fichiers/images/menu/fond.bmp");
-    graph->cursor=chargerImage("fichiers/images/menu/cursor.bmp");
-    graph->contenu_credits=chargerImage("fichiers/images/menu/contenu_credits.bmp");
-
-    graph->img_boutons_off[MENU_BOUTON_NOUVEAU]=chargerImage("fichiers/images/menu/nouveau0.bmp");
-    graph->img_boutons_off[MENU_BOUTON_CHARGER]=chargerImage("fichiers/images/menu/charger0.bmp");
-    graph->img_boutons_off[MENU_BOUTON_CREDITS]=chargerImage("fichiers/images/menu/credits0.bmp");
-    graph->img_boutons_off[MENU_BOUTON_QUITTER]=chargerImage("fichiers/images/menu/quitter0.bmp");
-    graph->img_boutons_off[MENU_BOUTON_RETOUR]=chargerImage("fichiers/images/menu/boutonRetour0.bmp");
-
-    graph->img_boutons_on[MENU_BOUTON_NOUVEAU]=chargerImage("fichiers/images/menu/nouveau1.bmp");
-    graph->img_boutons_on[MENU_BOUTON_CHARGER]=chargerImage("fichiers/images/menu/charger1.bmp");
-    graph->img_boutons_on[MENU_BOUTON_CREDITS]=chargerImage("fichiers/images/menu/credits1.bmp");
-    graph->img_boutons_on[MENU_BOUTON_QUITTER]=chargerImage("fichiers/images/menu/quitter1.bmp");
-    graph->img_boutons_on[MENU_BOUTON_RETOUR]=chargerImage("fichiers/images/menu/boutonRetour1.bmp");
-
-    graph->music = chargerSon("fichiers/sound.wav");
-
-    for(i=0; i<NB_BOUTONS; i++)
-    {
-        fscanf(fpx,"%d",&graph->boutons_x[i]);
-        fscanf(fpy,"%d",&graph->boutons_y[i]);
-    }
-    fclose(fpx);
-    fclose(fpy);
-}
-
-void menu_afficher(t_graphMenu graph)
-{
-    int mx, my, i;
-    int quitter = 0;
-    int choix;
-    char nom_fichier[TAILLE_CHAINE];
     int son=1;
-
-    play_sample(graph.music, 255, 127, 1000, 1); // play the music
-
-    while (!quitter)
+    graph->music = chargerSon("fichiers/sound.wav");//initialisation du son
+    play_sample(graph->music, 255, 127, 1000, 1); //jouer la musique
+    while(!key[KEY_ESC])
     {
-        if(key_press[KEY_S] && son==0)
+        if(key_press[KEY_S] && son==0)//remet la musique en marche
         {
             son= 1;
-            play_sample(graph.music, 255, 127, 1000, 1); // play the music
+            play_sample(graph->music, 255, 127, 1000, 1); //on joue la musique
         }
-        else if(key_press[KEY_S] && son==1)
+        else if(key_press[KEY_S] && son==1)//arrete la musique
         {
             son= 0;
-            stop_sample(graph.music);
+            stop_sample(graph->music);
         }
-
-        show_mouse(NULL);
-        // Mettre à jour les variables touche (clavier) et bouton (souris)
-        rafraichir_clavier_souris();
-
-        mx=mouse_x;
-        my=mouse_y;
-
-        // Effacer complètement le buffer (tout disparaît)
-        effacer_page();
-
-        //AFFICHAGE
-        draw_sprite(page, graph.fond, 0,0);
-
-        for (i=0; i<NB_BOUTONS-1; i++)
+        blit(menu1, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);//on affiche le menu de choix des langues
+        if((mouse_b&1) && (mouse_x >= 120) && (mouse_x <= 350) && (mouse_y >= 300) && (mouse_y <= 550))//si l'utilisateur a cliqué sur le drapeau du RU
         {
-            if (mx>=graph.boutons_x[i] && mx<=(graph.boutons_x[i]+graph.img_boutons_off[i]->w) && my>=graph.boutons_y[i] && my<=(graph.boutons_y[i]+graph.img_boutons_off[i]->h))
-                draw_sprite(page, graph.img_boutons_on[i], graph.boutons_x[i], graph.boutons_y[i]);
-            else
-                draw_sprite(page, graph.img_boutons_off[i], graph.boutons_x[i], graph.boutons_y[i]);
+            //chargement des bitmap anglaises
         }
-
-        draw_sprite(page, graph.cursor, mx, my);
-        afficher_page();
-
-        //GESTION DU CLIC
-        if (bouton=='g')
+        else if((mouse_b&1) && (mouse_x >= 480) && (mouse_x <= 850) && (mouse_y >= 380) && (mouse_y <= 820))//le clic se situe sur le drapeau français
         {
-            if (mx>=graph.boutons_x[MENU_BOUTON_NOUVEAU] && mx<=(graph.boutons_x[MENU_BOUTON_NOUVEAU]+graph.img_boutons_off[MENU_BOUTON_NOUVEAU]->w) && my>=graph.boutons_y[MENU_BOUTON_NOUVEAU] && my<=(graph.boutons_y[MENU_BOUTON_NOUVEAU]+graph.img_boutons_off[MENU_BOUTON_NOUVEAU]->h))
-            {
-                //NOUVEAU
-                printf("nouveau\n");
-                choix = menu_selection_mode(graph);
-                if (choix != -1)
-                {
-                    show_mouse(screen);
-                    menu_boucle_jeu(choix,NULL,graph);
-                }
-            }
-            if (mx>=graph.boutons_x[MENU_BOUTON_CHARGER] && mx<=(graph.boutons_x[MENU_BOUTON_CHARGER]+graph.img_boutons_off[MENU_BOUTON_CHARGER]->w) && my>=graph.boutons_y[MENU_BOUTON_CHARGER] && my<=(graph.boutons_y[MENU_BOUTON_CHARGER]+graph.img_boutons_off[MENU_BOUTON_CHARGER]->h))
-            {
-                //NOUVEAU
-                printf("charger\n");
-
-                    show_mouse(screen);
-
-
-            }
-            if (mx>=graph.boutons_x[MENU_BOUTON_CREDITS] && mx<=(graph.boutons_x[MENU_BOUTON_CREDITS]+graph.img_boutons_off[MENU_BOUTON_CREDITS]->w) && my>=graph.boutons_y[MENU_BOUTON_CREDITS] && my<=(graph.boutons_y[MENU_BOUTON_CREDITS]+graph.img_boutons_off[MENU_BOUTON_CREDITS]->h))
-            {
-                //CREDITS
-                printf("credits\n");
-                menu_afficher_credits(graph);
-            }
-            if (mx>=graph.boutons_x[MENU_BOUTON_QUITTER] && mx<=(graph.boutons_x[MENU_BOUTON_QUITTER]+graph.img_boutons_off[MENU_BOUTON_QUITTER]->w) && my>=graph.boutons_y[MENU_BOUTON_QUITTER] && my<=(graph.boutons_y[MENU_BOUTON_QUITTER]+graph.img_boutons_off[MENU_BOUTON_QUITTER]->h))
-            {
-                //QUITTER
-                printf("Quitter\n");
-                quitter = 1;
-            }
+            BITMAP* menuFR=chargerImage("fichiers/images/menu1/menuFR/menu2FR.bmp");//chargement des bitmap françaises
+            menuBisFR(menu1, menuFR,  graph);//on lance le jeu en français
+            destroy_bitmap(menuFR);
         }
-        rest(20);
     }
 }
 
-void menu_afficher_credits(t_graphMenu graph)
+int menuModeFR(BITMAP* menufr, BITMAP* menuModefr, t_graphMenu* graph)//menu choix du mode
 {
-    int mx;
-    int my;
-    int quitter = 0;
-
-    while(!quitter)
+    int mode, quitter;
+    mode=-1;
+    quitter=-1;
+    blit(menuModefr, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);//on affiche le menu de choix du mode communiste/capitaliste
+    while(quitter == -1)
     {
-        mx = mouse_x;
-        my = mouse_y;
-
-        //AFFICHAGE
-        effacer_page();
-        draw_sprite(page, graph.contenu_credits, 0, 0);
-        if (mx>=graph.boutons_x[MENU_BOUTON_RETOUR] && mx<=graph.boutons_x[MENU_BOUTON_RETOUR]+graph.img_boutons_off[MENU_BOUTON_RETOUR]->w && my>=graph.boutons_y[MENU_BOUTON_RETOUR] && my<=graph.boutons_y[MENU_BOUTON_RETOUR]+graph.img_boutons_off[MENU_BOUTON_RETOUR]->h)
-            draw_sprite(page, graph.img_boutons_on[MENU_BOUTON_RETOUR], graph.boutons_x[MENU_BOUTON_RETOUR],graph.boutons_y[MENU_BOUTON_RETOUR]);
-        else
-            draw_sprite(page, graph.img_boutons_off[MENU_BOUTON_RETOUR], graph.boutons_x[MENU_BOUTON_RETOUR],graph.boutons_y[MENU_BOUTON_RETOUR]);
-
-        //CLIC
-        if (mx>=graph.boutons_x[MENU_BOUTON_RETOUR] && mx<=graph.boutons_x[MENU_BOUTON_RETOUR]+graph.img_boutons_off[MENU_BOUTON_RETOUR]->w && my>=graph.boutons_y[MENU_BOUTON_RETOUR] && my<=graph.boutons_y[MENU_BOUTON_RETOUR]+graph.img_boutons_off[MENU_BOUTON_RETOUR]->h && mouse_b==1)
-            quitter = 1;
-
-        draw_sprite(page, graph.cursor, mx, my);
-        afficher_page();
+        if ((mouse_b & 1) && (mouse_x >= 0) && (mouse_x <= 470) && (mouse_y >= 300) && (mouse_y <= 500))//si l'utilisateur a cliqué sur les règles
+        {
+            printf("mode communiste\n");
+            mode=MODE_COMMUNISTE;//jeu en mode communiste
+            quitter=1;
+        }
+        else if ((mouse_b & 1) && (mouse_x >= 550) && (mouse_x <= 1024) && (mouse_y >= 300) && (mouse_y <= 500))//si l'utilisateur a cliqué sur les règles
+        {
+            printf("mode capitaliste\n");
+            mode=MODE_CAPITALISTE;//jeu en mode capitaliste
+            quitter=1;
+        }
         rest(20);
     }
+    return mode;//on retourne la valeur du mode
 }
 
-int menu_selection_mode(t_graphMenu graph)
+void menuBisFR(BITMAP* menu1, BITMAP* menuFR, t_graphMenu* graph)
 {
-    int mx, my, i;
-    int quitter = 0;
-    int mode = -1;
-
-    int index = 0;
-    int posx = 0;
-    int cpt = 0;
-
-    while (!quitter)
+    int choix;
+    BITMAP* menufr=chargerImage("fichiers/images/menu1/menuFR/menu2FR.bmp");//chargement des bitmap anglaises
+    BITMAP* menuModefr=chargerImage("fichiers/images/menu1/menuFR/menuModeFR.bmp");
+    BITMAP* menuReglesfr=chargerImage("fichiers/images/menu1/menuFR/menuReglesFR.bmp");
+    blit(menufr, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);//on affiche le menu en français
+    while(!key[KEY_ESC])
     {
-        cpt++;
-        // Mettre à jour les variables touche (clavier) et bouton (souris)
-        rafraichir_clavier_souris();
-
-        mx=mouse_x;
-        my=mouse_y;
-
-        // Effacer complètement le buffer (tout disparaît)
-        effacer_page();
-
-        //AFFICHAGE
-        draw_sprite(page, graph.graphsdusousmenu.fond, 0,0);
-
-        for (i=0; i<NB_BOUTONS_SOUS_MENU; i++)
+        if((mouse_b&1) && (mouse_x >= 10) && (mouse_x <= 60) && (mouse_y >= 10) && (mouse_y <= 60))//si l'utilisateur a cliqué sur la croix rouge
         {
-            if (mx>=graph.graphsdusousmenu.boutons_x[i] && mx<=(graph.graphsdusousmenu.boutons_x[i]+graph.graphsdusousmenu.img_boutons_off[i]->w) && my>=graph.graphsdusousmenu.boutons_y[i] && my<=(graph.graphsdusousmenu.boutons_y[i]+graph.graphsdusousmenu.img_boutons_off[i]->h))
-                draw_sprite(page, graph.graphsdusousmenu.img_boutons_on[i], graph.graphsdusousmenu.boutons_x[i], graph.graphsdusousmenu.boutons_y[i]);
-            else
-                draw_sprite(page, graph.graphsdusousmenu.img_boutons_off[i], graph.graphsdusousmenu.boutons_x[i], graph.graphsdusousmenu.boutons_y[i]);
+            printf("quitter\n");
+            destroy_bitmap(menufr);
+            destroy_bitmap(menuModefr);
+            destroy_bitmap(menuReglesfr);//on détruit les bitmap
+            allegro_exit();
+            exit(EXIT_FAILURE);//on quitte le jeu
         }
-
-        if (mx>=graph.boutons_x[MENU_BOUTON_RETOUR] && mx<=graph.boutons_x[MENU_BOUTON_RETOUR]+graph.img_boutons_off[MENU_BOUTON_RETOUR]->w && my>=graph.boutons_y[MENU_BOUTON_RETOUR] && my<=graph.boutons_y[MENU_BOUTON_RETOUR]+graph.img_boutons_off[MENU_BOUTON_RETOUR]->h)
-            draw_sprite(page, graph.img_boutons_on[MENU_BOUTON_RETOUR], graph.boutons_x[MENU_BOUTON_RETOUR],graph.boutons_y[MENU_BOUTON_RETOUR]);
-        else
-            draw_sprite(page, graph.img_boutons_off[MENU_BOUTON_RETOUR], graph.boutons_x[MENU_BOUTON_RETOUR],graph.boutons_y[MENU_BOUTON_RETOUR]);
-
-
-
-        draw_sprite(page, graph.cursor, mx, my);
-        afficher_page();
-
-        //GESTION DU CLIC
-        if (bouton=='g')
+        else if((mouse_b&1) && (mouse_x >= 100) && (mouse_x <= 950) && (mouse_y >= 165) && (mouse_y <= 265))//si l'utilisateur a cliqué sur "nouvelle partie"
         {
-            if (mx>=graph.graphsdusousmenu.boutons_x[SOUS_MENU_COMMUNISTE] && mx<=(graph.graphsdusousmenu.boutons_x[SOUS_MENU_COMMUNISTE]+graph.graphsdusousmenu.img_boutons_off[SOUS_MENU_COMMUNISTE]->w) && my>=graph.graphsdusousmenu.boutons_y[SOUS_MENU_COMMUNISTE] && my<=(graph.graphsdusousmenu.boutons_y[SOUS_MENU_COMMUNISTE]+graph.graphsdusousmenu.img_boutons_off[SOUS_MENU_COMMUNISTE]->h))
-            {
-                quitter = 1;
-                mode = MODE_COMMUNISTE;
-            }
-            if (mx>=graph.graphsdusousmenu.boutons_x[SOUS_MENU_CAPITALISTE] && mx<=(graph.graphsdusousmenu.boutons_x[SOUS_MENU_CAPITALISTE]+graph.graphsdusousmenu.img_boutons_off[SOUS_MENU_CAPITALISTE]->w) && my>=graph.graphsdusousmenu.boutons_y[SOUS_MENU_CAPITALISTE] && my<=(graph.graphsdusousmenu.boutons_y[SOUS_MENU_CAPITALISTE]+graph.graphsdusousmenu.img_boutons_off[SOUS_MENU_CAPITALISTE]->h))
-            {
-                quitter = 1;
-                mode = MODE_CAPITALISTE;
-            }
-            if (mx>=graph.boutons_x[MENU_BOUTON_RETOUR] && mx<=graph.boutons_x[MENU_BOUTON_RETOUR]+graph.img_boutons_off[MENU_BOUTON_RETOUR]->w && my>=graph.boutons_y[MENU_BOUTON_RETOUR] && my<=graph.boutons_y[MENU_BOUTON_RETOUR]+graph.img_boutons_off[MENU_BOUTON_RETOUR]->h && mouse_b==1)
-            {
-                quitter = 1;
-            }
+            printf("jouer\n");
+            choix=menuModeFR(menufr, menuModefr, graph);//le joueur choisi le mode de la partie
+            destroy_bitmap(menufr);
+            destroy_bitmap(menuModefr);
+            destroy_bitmap(menuReglesfr);//on détruit les bitmap
+            menu_boucle_jeu(choix,NULL,*graph);//on lance la boucle de jeu
         }
-        rest(20);
+        else if((mouse_b&1) && (mouse_x >= 100) && (mouse_x <= 950) && (mouse_y >= 350) && (mouse_y <= 450))//si l'utilisateur a cliqué sur "charger partie"
+        {
+            printf("quitter\n");
+            destroy_bitmap(menufr);
+            destroy_bitmap(menuModefr);
+            destroy_bitmap(menuReglesfr);//on détruit les bitmap
+            allegro_exit();
+            exit(EXIT_FAILURE);//on quitte le jeu
+        }
+        else if((mouse_b&1) && (mouse_x >= 100) && (mouse_x <= 950) && (mouse_y >= 560) && (mouse_y <= 660))//si l'utilisateur a cliqué sur "règles du jeu"
+        {
+            printf("regles\n");
+            menuReglesFR(menufr, menuReglesfr, menu1, graph);//on affiche les règles du jeu
+        }
     }
-    return mode;
 }
 
-void menu_boucle_jeu(int mode_choisi,const char* nom_fichier,t_graphMenu graph)
+void menuReglesFR(BITMAP* menufr, BITMAP* menuReglesfr, BITMAP* menu1, t_graphMenu* graph)//affichage des règles du jeu
 {
+    blit(menuReglesfr, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);//on affiche le menu en français
+    while(!key[KEY_ESC])
+    {
+        if((mouse_b&1) && (mouse_x >= 0) && (mouse_x <= 100) && (mouse_y >= 650) && (mouse_y <= 768))//si l'utilisateur a cliqué sur la flèche de retour
+        {
+            menuBisFR(menu1, menufr, graph);//on retourne au menu
+        }
+    }
+}
+
+void menu_boucle_jeu(int mode,const char* nom_fichier,t_graphMenu graph)
+{
+    int quitte,son;
+    quitte=0;
+    son=0;
     t_editeur* ed = NULL;
-    int quitte=0,son=0;
-    int quitquestion=0;
-
-
-
-    switch(mode_choisi)
+    switch(mode)
     {
         case MODE_CAPITALISTE:
             ed = editeur_allouer(MODE_CAPITALISTE);
@@ -2362,31 +2186,30 @@ void menu_boucle_jeu(int mode_choisi,const char* nom_fichier,t_graphMenu graph)
         case MODE_COMMUNISTE:
             ed = editeur_allouer(MODE_COMMUNISTE);
             break;
+        case CHARGER:
+            ed = editeur_allouer(MODE_CAPITALISTE); // osef on va le changer en chargeant la ville
+            ville_charger(nom_fichier,ed->maville);
+            break;
     }
-
     while((!key[KEY_ESC])&&(quitte != 1))
     {
-
-        if(key_press[KEY_S] && son==0)
+        if(key_press[KEY_S] && son==0)//joue la musique
         {
-            son= 1;
-            play_sample(graph.music, 255, 127, 1000, 1); // play the music
+            son=1;//on met le son à 1
+            play_sample(graph.music, 255, 127, 1000, 1);//on joue la musique
         }
-        else if(key_press[KEY_S] && son==1)
+        else if(key_press[KEY_S] && son==1)//arrête la musique
         {
-            son= 0;
-            stop_sample(graph.music);
+            son=0;//on met le son à 0
+            stop_sample(graph.music);//on arrete la musique
         }
-
         rafraichir_clavier_souris();
         editeur_gerer(ed);
-        quitte=editeur_afficher(ed, &quitquestion);
+        quitte=editeur_afficher(ed);
         rest(0.1);
     }
-
     editeur_liberer(ed);
 }
-
 /////////////////route.c////////////////////////
 t_route* route_creer()
 {
