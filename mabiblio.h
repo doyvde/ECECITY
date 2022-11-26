@@ -913,7 +913,7 @@ typedef struct graphismes
     BITMAP* fond_herbe;
     BITMAP* grille;
 
-    BITMAP* route[NB_NIVEAUX][NB_IMG_ROUTES];
+    BITMAP* route[NB_NIVEAUX];
 
     BITMAP* terrain_vague;
     BITMAP* ruine;

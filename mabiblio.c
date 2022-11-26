@@ -511,60 +511,37 @@ int chateau_distribuer(t_chateau* chateau,t_habitation* habitation)
         eau_distribuee+=habitation->chateaux_fournisseurs[i].qte_eau_distribuee;
     }
 
-    //desert
+//desert
 
-    if (habitation->case_de_referenceX >= 0 && habitation->case_de_referenceX <= 325 && habitation->case_de_referenceY >= 585 && habitation->case_de_referenceX <=725)
+    if (habitation->case_de_referenceX >= 0/20 && habitation->case_de_referenceX <= 320/20 && habitation->case_de_referenceY >= (585-25)/20 && habitation->case_de_referenceY <=(725-25)/20)
     {
         quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+        printf("desert1\n");
+
     }
 
-    if (habitation->case_de_referenceX >= 0 && habitation->case_de_referenceX <= 125 && habitation->case_de_referenceY >= 25 && habitation->case_de_referenceY <=725)
+    else if (habitation->case_de_referenceX >= 0/20 && habitation->case_de_referenceX <= 120/20 && habitation->case_de_referenceY >= (25-25)/20 && habitation->case_de_referenceY <=(725-25)/20)
     {
         quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+        printf("desert2\n");
     }
 
-    if (habitation->case_de_referenceX >= 0 && habitation->case_de_referenceX <= 205 && habitation->case_de_referenceY >= 85 && habitation->case_de_referenceY <=725)
+    else if (habitation->case_de_referenceX >= 0/20 && habitation->case_de_referenceX <= 200/20 && habitation->case_de_referenceY >= (85-25)/20 && habitation->case_de_referenceY <=(725-25)/20)
     {
         quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+        printf("desert3\n");
     }
 
-    if (habitation->case_de_referenceX >= 0 && habitation->case_de_referenceX <= 245 && habitation->case_de_referenceY >= 285 && habitation->case_de_referenceY <=725)
+    else if (habitation->case_de_referenceX >= 0/20 && habitation->case_de_referenceX <= 240/20 && habitation->case_de_referenceY >= (285-25)/20 && habitation->case_de_referenceY <=(725-25)/20)
     {
         quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
-    }
-
-//glace
-
-    if (habitation->case_de_referenceX >= 607 && habitation->case_de_referenceX <= 905 && habitation->case_de_referenceY >= 25 && habitation->case_de_referenceY <=165)
-    {
-        quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
-    }
-
-    if (habitation->case_de_referenceX >= 806 && habitation->case_de_referenceX <= 905 && habitation->case_de_referenceY >= 25 && habitation->case_de_referenceY <=345)
-    {
-        quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
-    }
-
-    if (habitation->case_de_referenceX >= 665 && habitation->case_de_referenceX <= 905 && habitation->case_de_referenceY >= 25 && habitation->case_de_referenceY <=205)
-    {
-        quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
-    }
-
-    if (habitation->case_de_referenceX >= 865 && habitation->case_de_referenceX <= 905 && habitation->case_de_referenceY >= 25 && habitation->case_de_referenceY <=385)
-    {
-        quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
-    }
-
-    if (habitation->case_de_referenceX >= 765 && habitation->case_de_referenceX <= 905 && habitation->case_de_referenceY >= 245 && habitation->case_de_referenceY <=285)
-    {
-        quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
-        //rectfill(page,765,245,905,285,COUL_FOND)
+        printf("desert4\n");
     }
 
     else
     {
         quantitee=habitation_nbhabitants(habitation)-eau_distribuee;
-        printf("%d,%d\n",habitation->case_de_referenceX,habitation->case_de_referenceY);
+        printf("%d\n",quantitee);
     }
 
 
@@ -715,7 +692,44 @@ void collection_centrale_distribuer(t_collection_centrale* collection_centrale,t
         {
             if((collection_habitation->habitation[j]->electricite==0)&&(longueurs[i][j]!=0))
             {
-                quantitee=habitation_nbhabitants(collection_habitation->habitation[j]); ///retourne le nombre d'habitant en fonction du stade de développement
+                //glace
+
+                if (collection_habitation->habitation[j]->case_de_referenceX >= 600/20 && collection_habitation->habitation[j]->case_de_referenceX <= 900/20 && collection_habitation->habitation[j]->case_de_referenceY >= (25-25)/20 && collection_habitation->habitation[j]->case_de_referenceY <=(165-25)/20)
+                {
+                    quantitee=habitation_nbhabitants(collection_habitation->habitation[j])+100;
+                    printf("glace1\n");
+                }
+
+                else if (collection_habitation->habitation[j]->case_de_referenceX >= 800/20 && collection_habitation->habitation[j]->case_de_referenceX <= 900/20 && collection_habitation->habitation[j]->case_de_referenceY >= (25-25)/20 && collection_habitation->habitation[j]->case_de_referenceY <=(345-25)/20)
+                {
+                    quantitee=habitation_nbhabitants(collection_habitation->habitation[j])+100;
+                    printf("glace2\n");
+                }
+
+                else if (collection_habitation->habitation[j]->case_de_referenceX >= 660/20 && collection_habitation->habitation[j]->case_de_referenceX <= 900/20 && collection_habitation->habitation[j]->case_de_referenceY >= (25-25)/20 && collection_habitation->habitation[j]->case_de_referenceY <=(205-25)/20)
+                {
+                    quantitee=habitation_nbhabitants(collection_habitation->habitation[j])+100;
+                    printf("glace3\n");
+                }
+
+                else if (collection_habitation->habitation[j]->case_de_referenceX >= 860/20 && collection_habitation->habitation[j]->case_de_referenceX <= 900/20 && collection_habitation->habitation[j]->case_de_referenceY >= (25-25)/20 && collection_habitation->habitation[j]->case_de_referenceY <=(385-25)/20)
+                {
+                    quantitee=habitation_nbhabitants(collection_habitation->habitation[j])+100;
+                    printf("glace4\n");
+                }
+
+                else if (collection_habitation->habitation[j]->case_de_referenceX >= 760/20 && collection_habitation->habitation[j]->case_de_referenceX <= 900/20 && collection_habitation->habitation[j]->case_de_referenceY >= (245-25)/20 && collection_habitation->habitation[j]->case_de_referenceY <=(285-25)/20)
+                {
+                    quantitee=habitation_nbhabitants(collection_habitation->habitation[j])+100;
+                    printf("glace5\n");
+
+                }
+                else
+                {
+                    quantitee=habitation_nbhabitants(collection_habitation->habitation[j]);
+                    printf("%d\n",quantitee);
+                }
+                //quantitee=habitation_nbhabitants(collection_habitation->habitation[j]); ///retourne le nombre d'habitant en fonction du stade de développement
                 if(collection_centrale->centrale[i]->capacite.capacite_disponible>=quantitee)
                 {
                     collection_habitation->habitation[j]->id_centrale_fournisseuse.caseX = collection_centrale->centrale[i]->id_centrale.caseX; // on recopie l'ID de la centrale
@@ -926,16 +940,11 @@ void collection_habitation_ajouter_habitation(t_collection_habitation* collectio
 {
     if(collection_habitation->taille_actuelle==collection_habitation->taille_max)
     {
-        collection_habitation_reallouer(collection_habitation);
+        collection_habitation->taille_max=3*collection_habitation->taille_max/2;
+        collection_habitation->habitation=realloc(collection_habitation->habitation,collection_habitation->taille_max*sizeof(t_habitation*));
     }
     collection_habitation->habitation[collection_habitation->taille_actuelle]=new_habitation;
     collection_habitation->taille_actuelle++;
-}
-
-void collection_habitation_reallouer(t_collection_habitation* collection_habitation)
-{
-    collection_habitation->taille_max=3*collection_habitation->taille_max/2;
-    collection_habitation->habitation=realloc(collection_habitation->habitation,collection_habitation->taille_max*sizeof(t_habitation*));
 }
 
 void collection_habitation_evolution(t_collection_habitation* collection_habitation,int mode, int* argent,int nb_chateaux,int nb_centrales,int** longueurs_chateaux,int** longueurs_centrales,int* capacite_chateaux,int* capacite_centrale)
@@ -1560,12 +1569,9 @@ t_graphismes* graphismes_charger()
 
     for(j=0; j<NB_NIVEAUX; j++)
     {
-        for(i=0; i<NB_IMG_ROUTES; i++)
-        {
-            sprintf(nom_fichier,"fichiers/images/jeu/route%d-%d.bmp",j,i);
-            nouv->route[j][i] = chargerImage(nom_fichier);
+            sprintf(nom_fichier,"fichiers/images/jeu/route%d.bmp",j);
+            nouv->route[j]= chargerImage(nom_fichier);
 
-        }
     }
 
     nouv->terrain_vague = chargerImage("fichiers/images/jeu/terrain_vague.bmp");
@@ -1626,10 +1632,9 @@ void graphismes_liberer(t_graphismes* graph)
 
     for(j=0; j<NB_NIVEAUX; j++)
     {
-        for(i=0; i<NB_IMG_ROUTES; i++)
-        {
-            destroy_bitmap(graph->route[j][i]);
-        }
+
+            destroy_bitmap(graph->route[j]);
+
     }
 
     destroy_bitmap(graph->terrain_vague);
@@ -2223,7 +2228,7 @@ t_route* route_creer()
     return nouv;
 }
 
-void route_actualiser(t_route* route,t_case*** kase)
+/*void route_actualiser(t_route* route,t_case*** kase)
 {
     int colonne,ligne;
     colonne=route->case_de_referenceX;
@@ -2281,9 +2286,9 @@ void route_actualiser(t_route* route,t_case*** kase)
     {
         if((kase[ligne][colonne+1]->type==ROUTE)&&(kase[ligne+1][colonne]->type==ROUTE)&&(kase[ligne-1][colonne]->type==ROUTE)&&(kase[ligne][colonne-1]->type==ROUTE)) route->type=TYPE_ROUTE_INTERSECTION;
     }
-}
+}*/
 
-void route_actualiser_voisins(t_route* route,t_case*** kase)
+/*void route_actualiser_voisins(t_route* route,t_case*** kase)
 {
     int ligne,colonne;
 
@@ -2318,7 +2323,7 @@ void route_actualiser_voisins(t_route* route,t_case*** kase)
             route_actualiser(kase[ligne-1][colonne]->elem,kase);
         }
     }
-}
+}*/
 
 int route_place_libre(int colonne,int ligne,t_case*** kase)
 {
@@ -2346,16 +2351,16 @@ void route_placer(t_route* route,int colonne,int ligne,t_case*** kase)
     route->case_de_referenceX=colonne;
     route->case_de_referenceY=ligne;
 
-    route_actualiser(route,kase);
+    //route_actualiser(route,kase);
 
     kase[ligne][colonne]->type=ROUTE;
     kase[ligne][colonne]->elem=route;
-    route_actualiser_voisins(route,kase);
+    //route_actualiser_voisins(route,kase);
 }
 
 void route_afficher(t_route* route,int niveau)
 {
-    draw_sprite(graphs->buffer_ville,graphs->route[niveau][route->type],1+TAILLE_CASE*route->case_de_referenceX,1+TAILLE_CASE*route->case_de_referenceY);
+    draw_sprite(graphs->buffer_ville,graphs->route[niveau],1+TAILLE_CASE*route->case_de_referenceX,1+TAILLE_CASE*route->case_de_referenceY);
 }
 
 /////////////////terrain.c////////////////////////
@@ -2652,11 +2657,11 @@ void ville_afficher(t_ville* v, int bouton_boite_a_outils)
                     if(route_place_libre(col,lig,v->terrain))
                     {
                         //draw_lit_sprite(graphs->buffer_ville,graphs->terrain_vague,1+TAILLE_CASE*col,1+TAILLE_CASE*lig,makecol(0,250,0));
-                        draw_sprite(graphs->buffer_ville,graphs->route[NIVEAU_SOL][TYPE_ROUTE_HORIZONTALE],1+TAILLE_CASE*col,1+TAILLE_CASE*lig);
+                        draw_sprite(graphs->buffer_ville,graphs->route[NIVEAU_SOL],1+TAILLE_CASE*col,1+TAILLE_CASE*lig);
                     }
                     else
                     {
-                        draw_trans_sprite(graphs->buffer_ville,graphs->route[NIVEAU_SOL][TYPE_ROUTE_HORIZONTALE],1+TAILLE_CASE*col,1+TAILLE_CASE*lig);
+                        draw_trans_sprite(graphs->buffer_ville,graphs->route[NIVEAU_SOL],1+TAILLE_CASE*col,1+TAILLE_CASE*lig);
                     }
                 }
             }

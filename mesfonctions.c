@@ -5,51 +5,109 @@
 
 /*
 //desert
-rectfill(page, 0, 586, 326, 724, COUL_BORD);
-if (mouse_x >= 0 && mouse_x <= 325 && mouse_y >= 585 && mouse_y <=725)
-{
 
-}
-rectfill(page, 0, 26, 126, 724, COUL_BORD);
-if (mouse_x >= 0 && mouse_x <= 125 && mouse_y >= 25 && mouse_y <=725)
+if (habitation->case_de_referenceX >= 0/20 && habitation->case_de_referenceX <= 320/20 && habitation->case_de_referenceY >= (585-25)/20 && habitation->case_de_referenceY <=(725-25)/20)
 {
-
-}
-rectfill(page, 0, 86, 206, 724, COUL_BORD);
-if (mouse_x >= 0 && mouse_x <= 205 && mouse_y >= 85 && mouse_y <=725)
-{
-
-}
-rectfill(page, 0, 286, 246, 724, COUL_BORD);
-if (mouse_x >= 0 && mouse_x <= 245 && mouse_y >= 285 && mouse_y <=725)
-{
+quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+printf("desert1\n");
 
 }
 
+else if (habitation->case_de_referenceX >= 0/20 && habitation->case_de_referenceX <= 120/20 && habitation->case_de_referenceY >= (25-25)/20 && habitation->case_de_referenceY <=(725-25)/20)
+{
+quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+printf("desert2\n");
+}
+
+else if (habitation->case_de_referenceX >= 0/20 && habitation->case_de_referenceX <= 200/20 && habitation->case_de_referenceY >= (85-25)/20 && habitation->case_de_referenceY <=(725-25)/20)
+{
+quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+printf("desert3\n");
+}
+
+else if (habitation->case_de_referenceX >= 0/20 && habitation->case_de_referenceX <= 240/20 && habitation->case_de_referenceY >= (285-25)/20 && habitation->case_de_referenceY <=(725-25)/20)
+{
+quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+printf("desert4\n");
+}
+
+else
+{
+quantitee=habitation_nbhabitants(habitation)-eau_distribuee;
+printf("%d\n",quantitee);
+}*/
+
+/*
 //glace
-rectfill(page, 607, 25, 905, 165, COUL_BORD);
-if (mouse_x >= 607 && mouse_x <= 905 && mouse_y >= 25 && mouse_y <=165)
+
+if (habitation->case_de_referenceX >= 600/20 && habitation->case_de_referenceX <= 900/20 && habitation->case_de_referenceY >= (25-25)/20 && habitation->case_de_referenceY <=(165-25)/20)
 {
+quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+printf("glace1\n");
+}
+
+else if (habitation->case_de_referenceX >= 800/20 && habitation->case_de_referenceX <= 900/20 && habitation->case_de_referenceY >= (25-25)/20 && habitation->case_de_referenceY <=(345-25)/20)
+{
+quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+printf("glace2\n");
+}
+
+else if (habitation->case_de_referenceX >= 660/20 && habitation->case_de_referenceX <= 900/20 && habitation->case_de_referenceY >= (25-25)/20 && habitation->case_de_referenceY <=(205-25)/20)
+{
+quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+printf("glace3\n");
+}
+
+else if (habitation->case_de_referenceX >= 860/20 && habitation->case_de_referenceX <= 900/20 && habitation->case_de_referenceY >= (25-25)/20 && habitation->case_de_referenceY <=(385-25)/20)
+{
+quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+printf("glace4\n");
+}
+
+else if (habitation->case_de_referenceX >= 760/20 && habitation->case_de_referenceX <= 900/20 && habitation->case_de_referenceY >= (245-25)/20 && habitation->case_de_referenceY <=(285-25)/20)
+{
+quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+printf("glace5\n");
 
 }
-rectfill(page, 806, 25, 905, 346, COUL_BORD);
-if (mouse_x >= 806 && mouse_x <= 905 && mouse_y >= 25 && mouse_y <=345)
-{
 
-}
-rectfill(page, 665, 25, 905, 205, COUL_BORD);
-if (mouse_x >= 665 && mouse_x <= 905 && mouse_y >= 25 && mouse_y <=205)
+else
 {
-
+quantitee=habitation_nbhabitants(habitation)-eau_distribuee;
+printf("%d\n",quantitee);
 }
-rectfill(page, 865, 25, 905, 385, COUL_BORD);
-if (mouse_x >= 865 && mouse_x <= 905 && mouse_y >= 25 && mouse_y <=385)
+
+
+/*
+//glace
+
+else if (habitation->case_de_referenceX >= 600/20 && habitation->case_de_referenceX <= 900/20 && habitation->case_de_referenceY >= (25-25)/20 && habitation->case_de_referenceY <=(165-25)/20)
 {
-
+quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+printf("glace1\n");
 }
-rectfill(page, 765, 245, 905, 285, COUL_BORD);
-if (mouse_x >= 765 && mouse_x <= 905 && mouse_y >= 245 && mouse_y <=285)
+
+else if (habitation->case_de_referenceX >= 800/20 && habitation->case_de_referenceX <= 900/20 && habitation->case_de_referenceY >= (25-25)/20 && habitation->case_de_referenceY <=(345-25)/20)
 {
-
+quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+printf("glace2\n");
 }
-*/
+
+else if (habitation->case_de_referenceX >= 660/20 && habitation->case_de_referenceX <= 900/20 && habitation->case_de_referenceY >= (25-25)/20 && habitation->case_de_referenceY <=(205-25)/20)
+{
+quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+printf("glace3\n");
+}
+
+else if (habitation->case_de_referenceX >= 860/20 && habitation->case_de_referenceX <= 900/20 && habitation->case_de_referenceY >= (25-25)/20 && habitation->case_de_referenceY <=(385-25)/20)
+{
+quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+printf("glace4\n");
+}
+
+else if (habitation->case_de_referenceX >= 760/20 && habitation->case_de_referenceX <= 900/20 && habitation->case_de_referenceY >= (245-25)/20 && habitation->case_de_referenceY <=(285-25)/20)
+{
+quantitee=habitation_nbhabitants(habitation)+eau_distribuee+100;
+printf("glace5\n");
+
+}*/

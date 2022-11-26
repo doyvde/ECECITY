@@ -7,5 +7,6 @@ add_executable(ECECITY main.c mabiblio.c mabiblio.h mesfonctions.c)
 
 target_link_libraries(ECECITY -lmingw32 -lalleg44)
 
-file(COPY "fichiers" DESTINATION ${CMAKE_BINARY_DIR})
+
 file(COPY "saved_games" DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY "fichiers" DESTINATION ${CMAKE_BINARY_DIR})

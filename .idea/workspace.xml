@@ -17,9 +17,48 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc94bb9e-1034-4f8c-9aa0-0e9b41f0f01e" name="Changes" comment="compacteV2">
+    <list default="true" id="fc94bb9e-1034-4f8c-9aa0-0e9b41f0f01e" name="Changes" comment="ajout graphique">
+      <change afterPath="$PROJECT_DIR$/fichiers/images/jeu/route0.bmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fichiers/images/jeu/route1.bmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fichiers/images/jeu/route2.bmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fichiers/save.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_11_2022_13_16_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_11_2022_13_16__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/sound.wav" beforeDir="false" afterPath="$PROJECT_DIR$/fichiers/sound.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route0-0.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route0-1.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route0-10.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route0-2.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route0-3.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route0-4.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route0-5.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route0-6.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route0-7.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route0-8.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route0-9.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route1-0.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route1-1.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route1-10.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route1-2.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route1-3.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route1-4.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route1-5.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route1-6.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route1-7.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route1-8.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route1-9.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route2-0.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route2-1.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route2-10.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route2-2.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route2-3.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route2-4.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route2-5.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route2-6.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route2-7.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route2-8.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fichiers/images/jeu/route2-9.bmp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/mabiblio.c" beforeDir="false" afterPath="$PROJECT_DIR$/mabiblio.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mabiblio.h" beforeDir="false" afterPath="$PROJECT_DIR$/mabiblio.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mesfonctions.c" beforeDir="false" afterPath="$PROJECT_DIR$/mesfonctions.c" afterDir="false" />
@@ -47,13 +86,16 @@
     <option name="minorVersion" value="2.4" />
   </component>
   <component name="ProjectId" id="2HdO0y50ONb9b2PnHgNoYLRLkUn" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
@@ -61,11 +103,16 @@
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/antoi/Downloads/ECECITY&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;clion.custom.compiler.configurable&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ECECITY" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ECECITY" TARGET_NAME="ECECITY" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ECECITY" RUN_TARGET_NAME="ECECITY">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -97,7 +144,13 @@
       <workItem from="1669209954230" duration="6247000" />
       <workItem from="1669228417795" duration="5714000" />
       <workItem from="1669361003270" duration="6485000" />
-      <workItem from="1669369012843" duration="2913000" />
+      <workItem from="1669369012843" duration="4985000" />
+      <workItem from="1669382220064" duration="1496000" />
+      <workItem from="1669407969325" duration="2175000" />
+      <workItem from="1669478161078" duration="135000" />
+      <workItem from="1669478320218" duration="13825000" />
+      <workItem from="1669494965278" duration="82000" />
+      <workItem from="1669495059756" duration="614000" />
     </task>
     <task id="LOCAL-00001" summary="amelioration du travail d'antoine">
       <created>1668615690545</created>
@@ -120,7 +173,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669302755148</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="ajout graphique">
+      <created>1669372254939</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1669372254939</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -149,9 +209,11 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="amelioration du travail d'antoine" />
     <MESSAGE value="accesibilité menu" />
     <MESSAGE value="compacteV2" />
-    <option name="LAST_COMMIT_MESSAGE" value="compacteV2" />
+    <MESSAGE value="ajout graphique" />
+    <option name="LAST_COMMIT_MESSAGE" value="ajout graphique" />
   </component>
 </project>
