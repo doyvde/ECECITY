@@ -1847,6 +1847,7 @@ void* liste_recup_tete(t_liste* lst)
 void menu(BITMAP* menu1, t_graphMenu* graph)
 {
     int son=1;
+    //install_mouse();
     graph->music = chargerSon("fichiers/sound.wav");//initialisation du son
     play_sample(graph->music, 255, 127, 1000, 1); //jouer la musique
     while(!key[KEY_ESC])
@@ -1868,11 +1869,14 @@ void menu(BITMAP* menu1, t_graphMenu* graph)
         }
         else if((mouse_b&1) && (mouse_x >= 480) && (mouse_x <= 850) && (mouse_y >= 380) && (mouse_y <= 820))//le clic se situe sur le drapeau français
         {
+            destroy_bitmap(menu1);
             BITMAP* menuFR=chargerImage("fichiers/images/menu1/menuFR/menu2FR.bmp");//chargement des bitmap françaises
             menuBisFR(menu1, menuFR,  graph);//on lance le jeu en français
             destroy_bitmap(menuFR);
         }
+        rest(0.1);
     }
+
 }
 
 int menuModeFR(BITMAP* menufr, BITMAP* menuModefr, t_graphMenu* graph)//menu choix du mode
