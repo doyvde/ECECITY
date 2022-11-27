@@ -17,49 +17,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc94bb9e-1034-4f8c-9aa0-0e9b41f0f01e" name="Changes" comment="geographie">
+    <list default="true" id="fc94bb9e-1034-4f8c-9aa0-0e9b41f0f01e" name="Changes" comment="amelioration menu">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/boutonRetour0.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/boutonRetour1.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/charger0.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/charger1.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/contenu_credits.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/credits0.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/credits1.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/fond.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/menu/menuAN/menu2AN.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/menu/menuAN/menuModeAN.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/menu/menuAN/menuReglesAN.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/menu/menuChoixLangues.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/menu/menuFR/menu2FR.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/menu/menuFR/menuModeFR.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/menu/menuFR/menuReglesFR.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/nouveau0.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/nouveau1.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/quitter0.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/quitter1.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/capitaliste0.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/capitaliste1.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/communiste0.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/communiste1.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/fond.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/oiseau0.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/oiseau1.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/oiseau10.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/oiseau11.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/oiseau12.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/oiseau13.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/oiseau14.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/oiseau2.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/oiseau3.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/oiseau4.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/oiseau5.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/oiseau6.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/oiseau7.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/oiseau8.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fichiers/images/menu/sousmenu/oiseau9.bmp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/mabiblio.c" beforeDir="false" afterPath="$PROJECT_DIR$/mabiblio.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mabiblio.h" beforeDir="false" afterPath="$PROJECT_DIR$/mabiblio.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mesfonctions.c" beforeDir="false" afterPath="$PROJECT_DIR$/mesfonctions.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,27 +54,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "last_opened_file_path": "C:/Users/denis/OneDrive/Documents/ECE ing 2/Codes info/ECECITY-master",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "structure.view.defaults.are.configured": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/denis/OneDrive/Documents/ECE ing 2/Codes info/ECECITY/mabiblio.c&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.remoteExternalTools&quot;,
+    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
+    &quot;two.files.diff.last.used.file&quot;: &quot;C:/Users/denis/OneDrive/Documents/ECE ing 2/Codes info/ECECITY/mabiblio.c&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="ECECITY" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ECECITY" TARGET_NAME="ECECITY" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ECECITY" RUN_TARGET_NAME="ECECITY">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -149,7 +111,8 @@
       <workItem from="1669478320218" duration="13825000" />
       <workItem from="1669494965278" duration="82000" />
       <workItem from="1669495059756" duration="614000" />
-      <workItem from="1669540279869" duration="1673000" />
+      <workItem from="1669540279869" duration="9558000" />
+      <workItem from="1669550458350" duration="6558000" />
     </task>
     <task id="LOCAL-00001" summary="amelioration du travail d'antoine">
       <created>1668615690545</created>
@@ -179,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669372254939</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="amelioration menu">
+      <created>1669542043835</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1669542043835</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -243,6 +213,7 @@
     <MESSAGE value="accesibilité menu" />
     <MESSAGE value="compacteV2" />
     <MESSAGE value="ajout graphique" />
-    <option name="LAST_COMMIT_MESSAGE" value="ajout graphique" />
+    <MESSAGE value="amelioration menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="amelioration menu" />
   </component>
 </project>

@@ -1018,6 +1018,227 @@ t_case*** terrain_allouer();
 /// SINON, fuite mémoire
 void terrain_liberer(t_case*** mat);
 
+// english version
 
+/////////////////bfs.c////////////////////////
+int* recherchepluscourtcheminEN(t_bfs* bfs,t_case*** kase);
+
+void tester_voisinsEN(t_case*** kase,int ligne,int colonne,int* longueurs,int marque[NB_CASES_LIG][NB_CASES_COL],t_file* file);
+/////////////////info.c////////////////////////
+t_infos * infos_creerEN();
+
+void info_afficherEN(t_editeur* ed);//afficher les infos du jeu
+
+
+void info_dragEN(t_editeur* ed);
+
+/////////////////boitaoutil.c////////////////////////
+t_boite_a_outils* boiteaoutils_creerEN();
+
+void boiteaoutils_chargerimagesEN(t_boite_a_outils* boiteaoutils);//chargement des images de la boite à outils
+
+
+void boiteaoutils_dragEN(t_boite_a_outils* boiteaoutils);//pour le mouvement de la boîte à outils
+
+
+void boiteaoutils_afficherEN(t_boite_a_outils* boiteaoutils);//Affichage de la boite à outils
+
+
+/////////////////case.c////////////////////////
+
+t_case* case_allouerEN();
+
+int case_libreEN(t_case* kase);//pour savoir si la case est libre
+
+
+/////////////////caserne.c////////////////////////
+t_caserne* caserne_creerEN();//création caserne
+
+
+int caserne_place_libreEN(int x,int y,t_case*** kase);//pour disposer la caserne sur la grille
+
+
+int caserne_depassement_matriceEN(int colonne,int ligne);
+
+/////////////////centrale.c////////////////////////
+t_centrale* centrale_creerEN();//créer une centrale
+
+
+int centrale_place_libreEN(int col,int lig,t_case*** kase);//pour disposer la centrale sur la grille
+
+
+int centrale_depassement_matriceEN(int colonne,int ligne);
+
+/////////////////chateau.c////////////////////////
+t_chateau* chateau_creerEN();//on bcrée un chateau comme auparavant avec les centrales/casernes
+
+
+int chateau_place_libreEN(int col,int lig,t_case*** kase);
+
+int chateau_depassement_matriceEN(int colonne,int ligne);
+
+int chateau_distribuerEN(t_chateau* chateau,t_habitation* habitation);//distribution d'eau
+
+
+/////////////////collection_casernes.c////////////////////////
+t_collection_casernes* collection_casernes_creerEN();//on crée la collection de casernes
+
+
+void collection_casernes_ajouter_caserneEN(t_collection_casernes* collection_casernes,t_caserne* new_caserne);//ajouter une caserne à celles existantes
+
+
+int** collection_casernes_tableau_longueursEN(t_collection_casernes* collection_casernes,t_case*** kase,t_bfs* bfs,t_collection_habitation* collection_habitation);
+
+void collection_casernes_protegerEN(t_collection_casernes* collection_casernes,t_collection_habitation* collection_habitation,int** longueurs);
+/////////////////collection_centrales.c////////////////////////
+t_collection_centrale* collection_centrale_creerEN();//on crée la collection de centrales
+
+
+void collection_centrale_ajouter_centraleEN(t_collection_centrale* collection_centrale,t_centrale* new_centrale);//on ajoute une centrale à la grille
+
+
+void collection_centrale_distribuerEN(t_collection_centrale* collection_centrale,t_collection_habitation* collection_habitation,int** longueurs);
+
+int collection_centrale_elec_disponibleEN(t_collection_centrale* collection_centrale);//MAJ
+
+int** collection_centrale_tableau_longueursEN(t_collection_centrale* collection_centrale,t_case*** kase,t_bfs* bfs,t_collection_habitation* collection_habitation);
+
+int* collection_centrale_tableau_capaciteEN(t_collection_centrale* collection_centrale);
+
+/////////////////collection_chateau.c////////////////////////
+t_collection_chateau* collection_chateau_creerEN();
+
+void collection_chateau_ajouter_chateauEN(t_collection_chateau* collection_chateau,t_chateau* new_chateau);
+
+int** collection_chateau_tableau_longueursEN(t_collection_chateau* collection_chateau,t_case*** kase,t_bfs* bfs,t_collection_habitation* collection_habitation);
+
+void collection_chateau_distribuerEN(t_collection_chateau* collection_chateau,t_collection_habitation* collection_habitation,int** longueurs_chateaux_habitations);
+
+int collection_chateau_eau_disponibleEN(t_collection_chateau* collection_chateau);
+
+int* collection_chateau_tableau_capaciteEN(t_collection_chateau* collection_chateau);
+
+/////////////////collection_habitations.c////////////////////////
+t_collection_habitation* collection_habitation_creerEN();
+
+void collection_habitation_trierEN(t_collection_habitation* collection_habitation);
+
+void collection_habitation_ajouter_habitationEN(t_collection_habitation* collection_habitation,t_habitation* new_habitation);
+
+void collection_habitation_evolutionEN(t_collection_habitation* collection_habitation,int mode, int* argent,int nb_chateaux,int nb_centrales,int** longueurs_chateaux,int** longueurs_centrales,int* capacite_chateaux,int* capacite_centrale);
+
+void collection_habitation_debut_tourEN(t_collection_habitation* collection_habitation, int* nb_habitants);
+
+int collection_habitation_nombre_habitantsEN(t_collection_habitation* collection_habitation);
+
+/////////////////date.c////////////////////////
+t_date* date_allouerEN();
+
+void date_actualiserEN(t_date* date);//on actualise l'heure
+
+/////////////////editeur.c////////////////////////
+t_editeur* editeur_allouerEN(int mode_de_jeu); //envoyé par le menu
+
+void editeur_gererEN(t_editeur* ed);
+
+int editeur_afficherEN(t_editeur* ed, int* quitquestion);//affichage de l'interface
+
+void editeur_libererEN(t_editeur* ed);
+
+/////////////////file.c////////////////////////
+// Alloue une file
+t_file* file_creerEN();
+
+// Enfile ( = ajoute ) un élément à la file
+void file_enfilerEN(t_file* file, void* elem);
+
+// Défile ( = retire ) un élément à la file
+void* file_defilerEN(t_file* file);
+
+// Retourne 1 si la file est vide, 0 sinon
+int file_videEN(t_file* file);
+
+/////////////////file_explorer.c////////////////////////
+int obtenir_chemin_sauvegardeEN(char* chemin);
+
+void supprimer_contenu_chaine_apres_pointEN(char* chemin);
+
+int remplit_chemin_sauvegardeEN(char* chemin);
+
+/////////////////habitation.c////////////////////////
+t_habitation* habitation_creerEN();//création d'une habitation
+
+int habitation_place_libreEN(int col,int lig,t_case*** kase);
+
+int habitation_depassement_matriceEN(int colonne,int ligne);
+
+void habitation_placerEN(t_habitation* h,int col,int lig,t_case*** kase);
+
+int habitation_nbhabitantsEN(t_habitation* habitation);//associations des habitants et du stade de l'habitation
+
+int habitation_comparerEN(const void* a, const void* b) ;// il manque un degré de const, pourquoi?
+
+
+void habitation_evoluerEN(t_habitation* habitation,int mode,int* argent,int nb_chateaux,int nb_centrales,int** longueurs_chateaux,int** longueurs_centrales,int* capacite_chateau,int* capacite_centrale);
+
+void habitation_progressionEN(t_habitation* habitation);//on passe de cycle en cycle tant que c'est possible toutes les 15s
+
+void habitation_regressionEN(t_habitation* habitation);//on passe d'un cycle sup à un cycle inf toutes les 15s
+
+void habitation_evolution_communisteEN(t_habitation* habitation,int nb_chateaux,int nb_centrales,int** longueurs_chateaux,int** longueurs_centrales,int* capacite_chateaux,int* capacite_centrale);
+
+void habitation_evolution_capitalisteEN(t_habitation* habitation,int nb_chateaux,int nb_centrales,int** longueurs_chateaux,int** longueurs_centrales);
+
+int habitation_recolter_impotsEN(t_habitation* hab);
+
+/////////////////liste_generique_simple_chainage.c////////////////////////
+
+
+// Constructeur
+t_liste* liste_creerEN();
+
+// Ajout d'élément en queue
+void liste_ajout_queueEN(t_liste* lst, void* elem);
+
+// Retourne 1 (Vrai) si la liste est vide
+int liste_videEN(t_liste* lst);
+
+void* liste_recup_teteEN(t_liste* lst);
+
+/////////////////menu.c////////////////////////
+
+int menuModeFREN(BITMAP* menufr, BITMAP* menuModefr, t_graphMenu* graph);//menu choix du mode
+
+
+void menuBisFREN(BITMAP* menu1, BITMAP* menuFR, t_graphMenu* graph);
+
+void menuReglesFREN(BITMAP* menufr, BITMAP* menuReglesfr, BITMAP* menu1, t_graphMenu* graph);//affichage des règles du jeu
+
+void menu_boucle_jeuEN(int mode,const char* nom_fichier,t_graphMenu graph);
+/////////////////route.c////////////////////////
+t_route* route_creerEN();
+
+int route_place_libreEN(int colonne,int ligne,t_case*** kase);
+
+int route_depassement_matriceEN(int colonne,int ligne);
+
+void route_placerEN(t_route* route,int colonne,int ligne,t_case*** kase);
+
+void route_afficherEN(t_route* route,int niveau);
+
+/////////////////terrain.c////////////////////////
+t_case*** terrain_allouerEN();
+
+/// A APPELER APRES AVOIR LIBERE LES COLLECTIONS DE STRUCTURES (habitations, casernes, chateaux, centrales etc...)
+/// SINON, fuite mémoire
+
+/////////////////ville.c////////////////////////
+t_ville* ville_allouer_initialiserEN(int mode_de_jeu);
+
+void ville_sauvegarderEN(const char* nom_fichier,t_ville* v);
+
+void ville_afficherEN(t_ville* v, int bouton_boite_a_outils);
+
+void ville_gererEN(t_ville* v, int bouton_boite_a_outil);
 
 #endif //ECECITY_MABIBLIO_H

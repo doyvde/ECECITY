@@ -1553,21 +1553,22 @@ int habitation_nbhabitants(t_habitation* habitation)//associations des habitants
     return habitants;
 }
 
-int habitation_comparer(const void* a, const void* b)
+int habitation_comparer(const void* a, const void* b) // il manque un degré de const, pourquoi?
 {
-    const t_habitation* const* h1 = a;
+    const t_habitation* const* h1 = a; // en théorie ici il manque un degré de "const", comment savoir que c'était un pointeur constant sur pointeur (non constant) d'habitation constante qu'on voulait??
     const t_habitation* const* h2 = b;
-    if((*h1)->stade < (*h2)->stade)//si le stade de la 1e est inf à celui de la 2e
+    if((*h1)->stade < (*h2)->stade)
     {
         return 1;
     }
-    else if((*h1)->stade > (*h2)->stade)//inverse
+    else if((*h1)->stade > (*h2)->stade)
     {
         return -1;
     }
     else
         return 0;
 }
+
 
 void habitation_evoluer(t_habitation* habitation,int mode,int* argent,int nb_chateaux,int nb_centrales,int** longueurs_chateaux,int** longueurs_centrales,int* capacite_chateau,int* capacite_centrale)
 {
@@ -1866,6 +1867,10 @@ void menu(BITMAP* menu1, t_graphMenu* graph)
         if((mouse_b&1) && (mouse_x >= 120) && (mouse_x <= 350) && (mouse_y >= 300) && (mouse_y <= 550))//si l'utilisateur a cliqué sur le drapeau du RU
         {
             //chargement des bitmap anglaises
+            destroy_bitmap(menu1);
+            BITMAP* menuFREN=chargerImage("fichiers/images/menu1/menuAN/menu2AN.bmp");//chargement des bitmap anglaise
+            menuBisFREN(menu1, menuFREN,  graph);//on lance le jeu en anglais
+            destroy_bitmap(menuFREN);
         }
         else if((mouse_b&1) && (mouse_x >= 480) && (mouse_x <= 850) && (mouse_y >= 380) && (mouse_y <= 820))//le clic se situe sur le drapeau français
         {
@@ -1919,8 +1924,9 @@ void menuBisFR(BITMAP* menu1, BITMAP* menuFR, t_graphMenu* graph)
             destroy_bitmap(menufr);
             destroy_bitmap(menuModefr);
             destroy_bitmap(menuReglesfr);//on détruit les bitmap
-            allegro_exit();
-            exit(EXIT_FAILURE);//on quitte le jeu
+            fermer_allegro();
+            //allegro_exit();
+            //exit(EXIT_FAILURE);//on quitte le jeu
         }
         else if((mouse_b&1) && (mouse_x >= 100) && (mouse_x <= 950) && (mouse_y >= 165) && (mouse_y <= 265))//si l'utilisateur a cliqué sur "nouvelle partie"
         {
@@ -1933,18 +1939,21 @@ void menuBisFR(BITMAP* menu1, BITMAP* menuFR, t_graphMenu* graph)
         }
         else if((mouse_b&1) && (mouse_x >= 100) && (mouse_x <= 950) && (mouse_y >= 350) && (mouse_y <= 450))//si l'utilisateur a cliqué sur "charger partie"
         {
+            /*
             printf("quitter\n");
             destroy_bitmap(menufr);
             destroy_bitmap(menuModefr);
             destroy_bitmap(menuReglesfr);//on détruit les bitmap
-            allegro_exit();
-            exit(EXIT_FAILURE);//on quitte le jeu
+            //allegro_exit();
+            fermer_allegro();
+            //exit(EXIT_FAILURE);//on quitte le jeu*/
         }
         else if((mouse_b&1) && (mouse_x >= 100) && (mouse_x <= 950) && (mouse_y >= 560) && (mouse_y <= 660))//si l'utilisateur a cliqué sur "règles du jeu"
         {
             printf("regles\n");
             menuReglesFR(menufr, menuReglesfr, menu1, graph);//on affiche les règles du jeu
         }
+        rest(0.1);
     }
 }
 
@@ -1957,6 +1966,7 @@ void menuReglesFR(BITMAP* menufr, BITMAP* menuReglesfr, BITMAP* menu1, t_graphMe
         {
             menuBisFR(menu1, menufr, graph);//on retourne au menu
         }
+        rest(0.1);
     }
 }
 
@@ -1998,7 +2008,9 @@ void menu_boucle_jeu(int mode,const char* nom_fichier,t_graphMenu graph)
         quitte=editeur_afficher(ed,&quitquestion);
         rest(0.1);
     }
+    printf("liberer delivrer2\n");
     editeur_liberer(ed);
+
 }
 /////////////////route.c////////////////////////
 t_route* route_creer()

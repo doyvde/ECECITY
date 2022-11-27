@@ -10,9 +10,10 @@ int main()
     graphs = graphismes_charger();//chargement des graphismes
     t_graphMenu graphs_menu;//structure menu pour le son
     menu(menu1, &graphs_menu);//menu et jeu
+    printf("liberer delivrer\n");
     graphismes_liberer(graphs);//libération des graphismes
     fermer_allegro();
-    printf("liberer delivrer\n");
+
     return 0;
 }END_OF_MAIN();
 
