@@ -17,12 +17,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc94bb9e-1034-4f8c-9aa0-0e9b41f0f01e" name="Changes" comment="amelioration menu">
+    <list default="true" id="fc94bb9e-1034-4f8c-9aa0-0e9b41f0f01e" name="Changes" comment="god save the queen">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mabiblio.c" beforeDir="false" afterPath="$PROJECT_DIR$/mabiblio.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mabiblio.h" beforeDir="false" afterPath="$PROJECT_DIR$/mabiblio.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mesfonctions.c" beforeDir="false" afterPath="$PROJECT_DIR$/mesfonctions.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +108,7 @@
       <workItem from="1669494965278" duration="82000" />
       <workItem from="1669495059756" duration="614000" />
       <workItem from="1669540279869" duration="9558000" />
-      <workItem from="1669550458350" duration="6558000" />
+      <workItem from="1669550458350" duration="6863000" />
     </task>
     <task id="LOCAL-00001" summary="amelioration du travail d'antoine">
       <created>1668615690545</created>
@@ -149,7 +145,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669542043835</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="god save the queen">
+      <created>1669559851242</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1669559851242</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -214,6 +217,7 @@
     <MESSAGE value="compacteV2" />
     <MESSAGE value="ajout graphique" />
     <MESSAGE value="amelioration menu" />
-    <option name="LAST_COMMIT_MESSAGE" value="amelioration menu" />
+    <MESSAGE value="god save the queen" />
+    <option name="LAST_COMMIT_MESSAGE" value="god save the queen" />
   </component>
 </project>
