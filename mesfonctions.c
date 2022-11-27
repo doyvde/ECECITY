@@ -840,9 +840,8 @@ int collection_chateau_eau_disponibleEN(t_collection_chateau* collection_chateau
 
     for(i=0; i<collection_chateau->taille_actuelle; i++)
     {
-        eau_totale_dispo = eau_totale_dispo + collection_chateau->chateau[i]->capacite.capacite_disponible;;
+        eau_totale_dispo = eau_totale_dispo + collection_chateau->chateau[i]->capacite.capacite_disponible;
     }
-
     return eau_totale_dispo;
 }
 
@@ -1326,7 +1325,6 @@ void habitation_placerEN(t_habitation* h,int col,int lig,t_case*** kase)
 int habitation_nbhabitantsEN(t_habitation* habitation)//associations des habitants et du stade de l'habitation
 {
     int habitants = NB_HABITANTS_RUINE;
-
     switch(habitation->stade)
     {
         case STADE_RUINE :
@@ -1346,6 +1344,7 @@ int habitation_nbhabitantsEN(t_habitation* habitation)//associations des habitan
             break;
         case STADE_GRATTECIEL:
             habitants=NB_HABITANTS_GRATTECIEL; // gratte-ciel
+            break;
     }
     return habitants;
 }
@@ -1728,7 +1727,7 @@ void menuReglesFREN(BITMAP* menufr, BITMAP* menuReglesfr, BITMAP* menu1, t_graph
         {
             menuBisFREN(menu1, menufr, graph);//on retourne au menu
         }
-        rest(0.1);
+        rest(1);
     }
 }
 
@@ -1749,8 +1748,7 @@ void menu_boucle_jeuEN(int mode,const char* nom_fichier,t_graphMenu graph)
             ed = editeur_allouerEN(MODE_COMMUNISTE);
             break;
         case CHARGER:
-            //ed = editeur_allouerEN(MODE_CAPITALISTE); // osef on va le changer en chargeant la ville
-            //ville_charger(nom_fichier,ed->maville);
+            //
             break;
     }
     while((!key[KEY_ESC])&&(quitte != 1))
@@ -1768,7 +1766,7 @@ void menu_boucle_jeuEN(int mode,const char* nom_fichier,t_graphMenu graph)
         rafraichir_clavier_souris();
         editeur_gererEN(ed);
         quitte=editeur_afficherEN(ed,&quitquestion);
-        rest(0.1);
+        rest(1);
     }
     editeur_libererEN(ed);
     printf("liberer delivrer2\n");
@@ -1811,9 +1809,7 @@ void route_placerEN(t_route* route,int colonne,int ligne,t_case*** kase)
 {
     route->case_de_referenceX=colonne;
     route->case_de_referenceY=ligne;
-
     //route_actualiser(route,kase);
-
     kase[ligne][colonne]->type=ROUTE;
     kase[ligne][colonne]->elem=route;
     //route_actualiser_voisins(route,kase);
@@ -2350,7 +2346,7 @@ void ville_afficherEN(t_ville* v, int bouton_boite_a_outils)
 
             if((mx>0)&&(mx<GAME_W)&&(my>0)&&(my<GAME_H))
             {
-                if((v->terrain[lig][col]->type==HABITATION))
+                if(v->terrain[lig][col]->type==HABITATION)
                 {
                     tmp=((t_habitation*) v->terrain[lig][col]->elem);
                     for(compteur=0; compteur<FOURNISSEUR_MAX; compteur++)
@@ -2370,24 +2366,12 @@ void ville_afficherEN(t_ville* v, int bouton_boite_a_outils)
             blit(graphs->buffer_ville,page, 0,0, GAME_POSX,GAME_POSY, GAME_W,GAME_H);
             break;
         case NIVEAU_ELEC:
-
-            /*int mx,my; // CHANGEMENT DE REFERENTIEL POUR CONNAITRE LES COORDONNEES DE LA SOURIS DANS LA SUB-BITMAP DE JEU
-            // (voir les premiers "define" de "define.h" -> "GAME"
-
-            int lig,col; // permet de savoir dans quelle case la souris est actuellement
-            */
-
-
-
             mx = mouse_x - GAME_POSX;
             my = mouse_y - GAME_POSY;
-
             lig = my / TAILLE_CASE;
             col = mx / TAILLE_CASE;
-
             draw_sprite(graphs->buffer_ville,graphs->fond_herbe,0,0);
             draw_sprite(graphs->buffer_ville,graphs->grille,0,0);
-
             for(l=0; l<NB_CASES_LIG; l++)
             {
                 for(c=0; c<NB_CASES_COL; c++)
@@ -2398,9 +2382,6 @@ void ville_afficherEN(t_ville* v, int bouton_boite_a_outils)
                     }
                 }
             }
-
-            int i;
-            int img_utilisee;
             for(i=0;i<v->collec_habitations->taille_actuelle;i++) {
 
 
@@ -2540,7 +2521,7 @@ void ville_afficherEN(t_ville* v, int bouton_boite_a_outils)
 
             if((mx>0)&&(mx<GAME_W)&&(my>0)&&(my<GAME_H))
             {
-                if((v->terrain[lig][col]->type==HABITATION))
+                if(v->terrain[lig][col]->type==HABITATION)
                 {
                     tmp=((t_habitation*) v->terrain[lig][col]->elem);
                     if(tmp->electricite)
@@ -2696,7 +2677,6 @@ void ville_gererEN(t_ville* v, int bouton_boite_a_outil)
             if(chateau_place_libreEN(col,lig,v->terrain))
             {
                 chateau=chateau_creerEN();
-                int i,j;
                 chateau->case_de_referenceX=col;
                 chateau->case_de_referenceY=lig;
                 chateau->id_chateau.caseX = col;
@@ -2746,8 +2726,6 @@ void ville_gererEN(t_ville* v, int bouton_boite_a_outil)
             if(caserne_place_libreEN(col,lig,v->terrain))
             {
                 caserne=caserne_creerEN();
-
-                int i,j;
                 caserne->case_de_referenceX=col;
                 caserne->case_de_referenceY=lig;
                 for(i=col;i<col+CASERNE_W;i++)
