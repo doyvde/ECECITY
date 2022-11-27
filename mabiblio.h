@@ -1229,16 +1229,9 @@ void route_afficherEN(t_route* route,int niveau);
 /////////////////terrain.c////////////////////////
 t_case*** terrain_allouerEN();
 
-/// A APPELER APRES AVOIR LIBERE LES COLLECTIONS DE STRUCTURES (habitations, casernes, chateaux, centrales etc...)
-/// SINON, fuite mémoire
-
 /////////////////ville.c////////////////////////
 t_ville* ville_allouer_initialiserEN(int mode_de_jeu);
-
 void ville_sauvegarderEN(const char* nom_fichier,t_ville* v);
-
 void ville_afficherEN(t_ville* v, int bouton_boite_a_outils);
-
 void ville_gererEN(t_ville* v, int bouton_boite_a_outil);
-
 #endif //ECECITY_MABIBLIO_H
